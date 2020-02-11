@@ -4,16 +4,14 @@ import java.util.*;
 public class ElevatorItem {
 	private int num;            //电梯的编号
 	private int currentFloor;
-	private int currentDir;     //当前方向，1为上，-1为下
-	private int currentState;   //当前状态,1为运行，0为停止
+	private int currentDir;     //当前方向，1为上，-1为下，0为停止
 	private ArrayList<String> reList;
 	private int[] button;            //表示按钮状态，1表示按下，0表示没按
 	
 	public ElevatorItem(int num) {
 		this.num = num;
 		this.currentFloor = 1;
-		this.currentDir = 1;
-		this.currentState = 0;    //初始状态为停止
+		this.currentDir = 0; //初始状态为停止
 		reList = new ArrayList<String> ();
 		reList.clear();
 		button = new int[7];
@@ -47,8 +45,8 @@ public class ElevatorItem {
 		}
 	}
 	
-	public void ReCorder(int floor,int dir,String state) {
-		String temp;
+	public void reCorder(int floor,int dir,String state) {
+		String temp = "";
 		temp = temp+"("+Integer.toString(floor)+",";
 		if(dir == 1) {
 			temp = temp+"UP"+",";

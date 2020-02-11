@@ -10,18 +10,18 @@ public class FloorItem {
 		this.downButton = 0;
 	}
 	
-	public void SetUpButton(int state) {
+	public void setUpButton(int state) {
 		this.upButton = state;
 	}
-	public int GetUpButton(){
+	public int getUpButton(){
 		return this.upButton;
 	}
 	
 	
-	public void SetDownButton(int state) {
+	public void setDownButton(int state) {
 		this.downButton = state;
 	}
-	public int GetDownButton() {
+	public int getDownButton() {
 		return this.downButton;
 	}
 	

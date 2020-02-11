@@ -10,4 +10,8 @@ public class FloorRequireItem extends RequireItem{
 		this.eleState = eleState;
 	}
 	
+	public int getUpOrDown() {
+		return this.upOrDown;
+	}
+	
 }
