@@ -25,6 +25,11 @@ public class FloorItem {
 		return this.downButton;
 	}
 	
-	
+	public boolean noPress() {            //没有楼层摁下电梯
+		if(upButton==0&&downButton==0) {
+			return true;
+		}
+		else return false;
+	}
 	
 }
