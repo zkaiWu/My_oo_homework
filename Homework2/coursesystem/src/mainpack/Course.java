@@ -53,7 +53,7 @@ public class Course implements Comparable<Course>{
 		String s = "[";
 		if(this.teachersName.size()!=0) {
 			for(int i=0;i<this.teachersName.size()-1;i++) {
-				temp += this.teachersName.get(i) + ",";
+				s += this.teachersName.get(i) + ",";
 			}
 			s += this.teachersName.get(this.teachersName.size()-1);
 		}
@@ -78,5 +78,38 @@ public class Course implements Comparable<Course>{
 	
 	public int compareTo(Course b) {
 		return this.cid.compareTo(b.getCid());
+	}
+	
+	public static Course newCourse(String cid,String name,String teachersName,String maxContent) throws InputErrorException{
+		
+		/*
+		 * 工厂模式
+		 * 将字符串信息打包成Course类型
+		 * 感觉会有BUG   ฅ(๑ ̀ㅅ ́๑)ฅ
+		 */
+		Course c = new Course();
+		c.setCid(cid);
+		c.setCourseName(name);
+		
+		int len = teachersName.length();
+		teachersName = teachersName.substring(1,len);
+		len = teachersName.length();
+		teachersName = teachersName.substring(0,len-1);
+		String[] temp = teachersName.split(",");
+		for(int i=0;i<temp.length;i++) {
+			temp[i] = temp[i].replaceFirst("\\s+", "");
+		}
+		ArrayList<String> nameList = new ArrayList<>();
+		nameList.addAll(Arrays.asList(temp));
+		c.setTeachersName(nameList);
+		
+		try {
+			int mc = Integer.parseInt(maxContent);
+			c.setMaxContent(mc);
+		}catch(NumberFormatException ex){
+			throw new InputErrorException();
+		}
+		
+		return c;
 	}
 }
