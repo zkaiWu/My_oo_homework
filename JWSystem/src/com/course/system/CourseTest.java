@@ -1,4 +1,4 @@
-package mainpack;
+package com.course.system;
 
 import java.util.*;
 

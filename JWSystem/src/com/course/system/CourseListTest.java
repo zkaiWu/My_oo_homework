@@ -1,4 +1,4 @@
-package mainpack;
+package com.course.system;
 
 import java.util.ArrayList;
 
@@ -44,7 +44,7 @@ public class CourseListTest {
 						CourseListTest.printCourseList(c);
 					}
 					else {
-						System.out.println("Input illegal.");
+						System.out.println("Update fail.");
 					}
 				}catch(CourseNotExistException ex) {
 					System.out.println("Course does not exist.");
@@ -62,7 +62,7 @@ public class CourseListTest {
 				}catch(CourseNotExistException ex) {
 					System.out.println("Course does not exist.");
 				}catch(InputErrorException ex) {
-					System.out.println("Input illegal.");
+					System.out.println("Update fail.");
 				}
 			}
 					
@@ -77,7 +77,7 @@ public class CourseListTest {
 					cList.addCourse(c.getCid(), c);
 					System.out.println("Add success.");
 				} catch(InputErrorException ex) {
-					System.out.println("Input illegal.");
+					System.out.println("Update fail.");
 				} catch (CourseExistException ex) {
 					System.out.println("Course exist s.");
 				}

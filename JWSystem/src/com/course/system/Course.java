@@ -1,4 +1,4 @@
-package mainpack;
+package com.course.system;
 
 import java.util.*;
 import java.util.logging.Logger;
@@ -17,7 +17,11 @@ public class Course implements Comparable<Course>{
 	}
 	
 	public void setCid(String cid) {
-		this.cid = cid;
+		
+		/*
+		 * 要求前两位大写
+		 */
+		this.cid = "BH"+cid.substring(2);
 	}
 	public String getCid() {
 		return this.cid;
@@ -65,19 +69,10 @@ public class Course implements Comparable<Course>{
 		temp += "Capacity:" + this.maxContent;
 		return temp;
 	}
-	
-	public static boolean courseCheck(Course c) {
-		
-		/*
-		 * 为course的合法性提供检查，后期可能会修改
-		 */
-		
-		if(c.getMaxContent()<0) return false;
-		return true;
-	}
+
 	
 	public int compareTo(Course b) {
-		return this.cid.compareTo(b.getCid());
+		return this.getCid().compareTo(b.getCid());
 	}
 	
 }
