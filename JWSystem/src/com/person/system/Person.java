@@ -6,16 +6,19 @@ import java.util.Date;
 import java.util.logging.Logger;
 
 public class Person {
+	
 	private IDNum id;
 	private String name;
 	private int sex;     //1为男性，2为女性
 	private Date birthday;
+	private String passWord;
 	
 	public Person() {
 		setId(new IDNum());
 		setName("");
 		setSex(0);
 		setBirthday(new Date());
+		passWord = "a123456";
 	}
 	
 	public IDNum getId() {
@@ -47,7 +50,11 @@ public class Person {
 		this.birthday = birthday;
 	}
 	
-	public static ArrayList<String> decode(String inputs){
+	public void setPassWord(String psw) {
+		this.passWord = psw;
+	}
+	
+	public static ArrayList<String> deCode(String inputs){
 		ArrayList<String> list = new ArrayList<String>();
 		int len = inputs.length();
 		int mid = inputs.length()-18;
@@ -59,26 +66,45 @@ public class Person {
 		return list;
 	}
 	
-
-	public static Person newPerson(String ...inputs) {
+	public static boolean checkName(String name) {
+		return name.matches("[a-zA-Z]+");
+	}
+	public static boolean checkTID(String TID) {
+		return TID.matches("[0-9]{5}");
+	}
+	public static boolean checkSID(String SID) {
+		return SID.matches("[0-9]{8}");
+	}
+	
+	
+	/*
+	 * @param name 名字
+	 * @param id 身份证号
+	 * @param stID 教室号或学生号
+	 * @param type 学生或者老师
+	 * @return Person 实例
+	 */
+	public static Person newPerson(String name,String id,String stId,String type) throws PersonException{
 		
 		//检查是否合法
-		String id = "";
-		String name = "";
-		if(inputs == null) return null;
-		else if(inputs.length == 1) {
-			ArrayList<String> list = decode(inputs[0]);
-			name = list.get(0);
-			id = list.get(1);
-		}
-		else if(inputs.length == 2){
-			id = inputs[1];
-			name = inputs[0];
-		}
+		
 		Logger.getGlobal().info("id = "+id);
-		if(IDNum.checkIDNum(id) == false) {
-			return null;
+		if(Person.checkName(name)==false) {
+			throw new PersonException(ErrorCodeEnum.Name_Illegal_Error);
 		}
+		if(IDNum.checkIDNum(id) == false) {
+			throw new PersonException(ErrorCodeEnum.ID_Illegal_Error);
+		}
+		if(type == "teacher") {
+			if(checkTID(stId)==false) {
+				throw new PersonException(ErrorCodeEnum.TID_Illegal_Error);
+			}
+		}else if(type == "student") {
+			if(checkSID(stId)==false) {
+				throw new PersonException(ErrorCodeEnum.SID_Illegal_Error);
+			}
+		}
+		
 		
 		//若合法,新建一个Person类,设置属性。‘
 		Person person = new Person();
@@ -98,10 +124,39 @@ public class Person {
 		}catch(Exception ex) {
 			Logger.getGlobal().info("get data false");
 //			System.out.println("false");
-			return null;
+			throw new PersonException(ErrorCodeEnum.ID_Illegal_Error);
 		}
 		
 		return person;
+	}
+	
+	
+	public static boolean pswCheck(String psw) {
+		int hasNum = 0 ;
+		int hasLower = 0;
+		int hasUpper = 0;
+		int hasOther = 0;
+		if(psw.length()>18||psw.length()<6) {
+			return false;
+		}
+		for(int i=0;i<psw.length();i++) {
+			char c = psw.charAt(i);
+			if(c<33||c>126) {
+				return false;
+			} else if(c>'A'&&c<'Z') {
+				hasUpper = 1;
+			} else if(c>'a'&&c<'z') {
+				hasLower = 1;
+			} else if(c>'0'&&c<'9') {
+				hasNum=1;
+			} else {
+				hasOther = 1;
+			}
+		}
+		if((hasNum+hasLower+hasUpper+hasOther)<2) {
+			return false;
+		}
+		return true;
 	}
 	
 	@Override
