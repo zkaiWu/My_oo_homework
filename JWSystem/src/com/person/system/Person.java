@@ -50,7 +50,10 @@ public class Person {
 		this.birthday = birthday;
 	}
 	
-	public void setPassWord(String psw) {
+	public void setPassWord(String psw) throws PersonException{
+		if(Person.checkPsw(psw)==false) {
+			throw new PersonException(ErrorCodeEnum.PASSWORD_ILLEGAL_ERROR);
+		}
 		this.passWord = psw;
 	}
 	
@@ -66,72 +69,13 @@ public class Person {
 		return list;
 	}
 	
+	
+	
+	//检查Person中的各种ID是否合法
 	public static boolean checkName(String name) {
 		return name.matches("[a-zA-Z]+");
 	}
-	public static boolean checkTID(String TID) {
-		return TID.matches("[0-9]{5}");
-	}
-	public static boolean checkSID(String SID) {
-		return SID.matches("[0-9]{8}");
-	}
-	
-	
-	/*
-	 * @param name 名字
-	 * @param id 身份证号
-	 * @param stID 教室号或学生号
-	 * @param type 学生或者老师
-	 * @return Person 实例
-	 */
-	public static Person newPerson(String name,String id,String stId,String type) throws PersonException{
-		
-		//检查是否合法
-		
-		Logger.getGlobal().info("id = "+id);
-		if(Person.checkName(name)==false) {
-			throw new PersonException(ErrorCodeEnum.Name_Illegal_Error);
-		}
-		if(IDNum.checkIDNum(id) == false) {
-			throw new PersonException(ErrorCodeEnum.ID_Illegal_Error);
-		}
-		if(type == "teacher") {
-			if(checkTID(stId)==false) {
-				throw new PersonException(ErrorCodeEnum.TID_Illegal_Error);
-			}
-		}else if(type == "student") {
-			if(checkSID(stId)==false) {
-				throw new PersonException(ErrorCodeEnum.SID_Illegal_Error);
-			}
-		}
-		
-		
-		//若合法,新建一个Person类,设置属性。‘
-		Person person = new Person();
-		
-		IDNum idNum = new IDNum();
-		idNum.setIdNum(id);
-		
-		person.setId(idNum);
-		person.setName(name);
-		person.setSex(Integer.parseInt(id.substring(14,17))%2);
-		
-		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-			sdf.setLenient(false);
-			Date dir = sdf.parse(id.substring(6,14));
-			person.setBirthday(dir);
-		}catch(Exception ex) {
-			Logger.getGlobal().info("get data false");
-//			System.out.println("false");
-			throw new PersonException(ErrorCodeEnum.ID_Illegal_Error);
-		}
-		
-		return person;
-	}
-	
-	
-	public static boolean pswCheck(String psw) {
+	public static boolean checkPsw(String psw) {
 		int hasNum = 0 ;
 		int hasLower = 0;
 		int hasUpper = 0;
@@ -158,6 +102,53 @@ public class Person {
 		}
 		return true;
 	}
+	
+	
+	
+	/*
+	 * @param name 名字
+	 * @param id 身份证号
+	 * @param stID 教室号或学生号
+	 * @param type 学生或者老师
+	 * @return Person 实例
+	 */
+	public static Person newPerson(String name,String id) throws PersonException{
+		
+		//检查是否合法
+		
+		Logger.getGlobal().info("id = "+id);
+		if(Person.checkName(name)==false) {
+			throw new PersonException(ErrorCodeEnum.NAME_ILLEGAL_ERROR);
+		}
+		if(IDNum.checkIDNum(id) == false) {
+			throw new PersonException(ErrorCodeEnum.ID_ILLEGAL_ERROR);
+		}
+		
+		
+		//若合法,新建一个Person类,设置属性。‘
+		Person person = new Person();
+		
+		IDNum idNum = new IDNum();
+		idNum.setIdNum(id);
+		
+		person.setId(idNum);
+		person.setName(name);
+		person.setSex(Integer.parseInt(id.substring(14,17))%2);
+		
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			sdf.setLenient(false);
+			Date dir = sdf.parse(id.substring(6,14));
+			person.setBirthday(dir);
+		}catch(Exception ex) {
+			Logger.getGlobal().info("get data false");
+//			System.out.println("false");
+			throw new PersonException(ErrorCodeEnum.ID_ILLEGAL_ERROR);
+		}
+		
+		return person;
+	}
+	
 	
 	@Override
 	public String toString() {

@@ -4,21 +4,25 @@ public enum ErrorCodeEnum {
 	
 	
 	//ID类错误码
-	ID_Illegal_Error("ID illegal."),
-	ID_Exist_Error("ID exists"),
+	ID_ILLEGAL_ERROR("ID illegal."),
+	ID_EXIST_ERROR("ID exists"),
 	
 	
 	//Name类错误码
-	Name_Illegal_Error("Name illegal."),
+	NAME_ILLEGAL_ERROR("Name illegal."),
 	
 	//教师号类错误码
-	TID_Illegal_Error("TID illegal."),
-	TID_Exist_Error("TID exists."),
-	
+	TID_ILLEGAL_ERROR("TID illegal."),
+	TID_EXIST_ERROR("TID exists."),
+
 	
 	//学生号类错误码
-	SID_Illegal_Error("SID illegal."),
-	SID_Exist_Error("SID exists.");
+	SID_ILLEGAL_ERROR("SID illegal."),
+	SID_EXIST_ERROR("SID exists."),
+	
+	//密码类错误
+	PASSWORD_ILLEGAL_ERROR("Password illegal.");
+	
 	
 	private String description;
 	

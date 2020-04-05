@@ -60,7 +60,7 @@ public class PersonListTest {
 						continue;
 					}
 					else if(inputs[1].contentEquals("-t")) {
-						boolean judge=cList.teaLoginCheck(inputs[2],inputs[3]);
+						boolean judge=pList.teaLoginCheck(inputs[2],inputs[3]);
 						if(judge == true) {
 							System.out.println("Login success.");
 							PersonListTest.setLevel(STUDENT_LOGIN_STATE);
@@ -70,7 +70,7 @@ public class PersonListTest {
 						}
 					}
 					else if(inputs[1].contentEquals("-s")) {
-						boolean judge=cList.stuLoginCheck(inputs[2],inputs[3]);
+						boolean judge=pList.stuLoginCheck(inputs[2],inputs[3]);
 						if(judge == true) {
 							System.out.println("Login success.");
 							PersonListTest.setLevel(TEACHER_LOGIN_STATE);
