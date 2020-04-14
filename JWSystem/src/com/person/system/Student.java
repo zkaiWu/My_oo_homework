@@ -29,6 +29,7 @@ public class Student extends Person{
 		 *@param name 学生名
 		 *@param id 学生身份证号
 		 *@param SID 学生学号
+		 *@return Student 返回一个学生实例
 		 */
 		Person p = Person.newPerson(name,id);
 		Student stu = new Student();
@@ -38,7 +39,7 @@ public class Student extends Person{
 		stu.setSex(p.getSex());
 		
 		if(Student.checkSID(SID)==false) {
-			throw new PersonException(ErrorCodeEnum.SID_ILLEGAL_ERROR);
+			throw new PersonException(PersonErrorCode.SID_ILLEGAL_ERROR);
 		}
 		
 		stu.setSID(SID);

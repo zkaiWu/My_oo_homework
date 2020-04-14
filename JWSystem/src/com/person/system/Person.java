@@ -1,6 +1,7 @@
 package com.person.system;
 
 import java.text.SimpleDateFormat;
+
 import java.util.*;
 import java.util.Date;
 import java.util.logging.Logger;
@@ -50,11 +51,14 @@ public class Person {
 		this.birthday = birthday;
 	}
 	
-	public void setPassWord(String psw) throws PersonException{
-		if(Person.checkPsw(psw)==false) {
-			throw new PersonException(ErrorCodeEnum.PASSWORD_ILLEGAL_ERROR);
+	public void setPassWord(String pwd) throws PersonException{
+		if(Person.checkPwd(pwd)==false) {
+			throw new PersonException(PersonErrorCode.PASSWORD_ILLEGAL_ERROR);
 		}
-		this.passWord = psw;
+		this.passWord = pwd;
+	}
+	public String getPassWord() {
+		return this.passWord;
 	}
 	
 	public static ArrayList<String> deCode(String inputs){
@@ -75,16 +79,16 @@ public class Person {
 	public static boolean checkName(String name) {
 		return name.matches("[a-zA-Z]+");
 	}
-	public static boolean checkPsw(String psw) {
+	public static boolean checkPwd(String pwd) {
 		int hasNum = 0 ;
 		int hasLower = 0;
 		int hasUpper = 0;
 		int hasOther = 0;
-		if(psw.length()>18||psw.length()<6) {
+		if(pwd.length()>18||pwd.length()<6) {
 			return false;
 		}
-		for(int i=0;i<psw.length();i++) {
-			char c = psw.charAt(i);
+		for(int i=0;i<pwd.length();i++) {
+			char c = pwd.charAt(i);
 			if(c<33||c>126) {
 				return false;
 			} else if(c>'A'&&c<'Z') {
@@ -114,14 +118,14 @@ public class Person {
 	 */
 	public static Person newPerson(String name,String id) throws PersonException{
 		
-		//检查是否合法
-		
+		//检查id身份证是否合法
 		Logger.getGlobal().info("id = "+id);
 		if(Person.checkName(name)==false) {
-			throw new PersonException(ErrorCodeEnum.NAME_ILLEGAL_ERROR);
+			throw new PersonException(PersonErrorCode.NAME_ILLEGAL_ERROR);
 		}
+		//检查姓名是否合法
 		if(IDNum.checkIDNum(id) == false) {
-			throw new PersonException(ErrorCodeEnum.ID_ILLEGAL_ERROR);
+			throw new PersonException(PersonErrorCode.ID_ILLEGAL_ERROR);
 		}
 		
 		
@@ -129,7 +133,7 @@ public class Person {
 		Person person = new Person();
 		
 		IDNum idNum = new IDNum();
-		idNum.setIdNum(id);
+		idNum.setIdNum(id.replaceAll("X", "x"));
 		
 		person.setId(idNum);
 		person.setName(name);
@@ -143,7 +147,7 @@ public class Person {
 		}catch(Exception ex) {
 			Logger.getGlobal().info("get data false");
 //			System.out.println("false");
-			throw new PersonException(ErrorCodeEnum.ID_ILLEGAL_ERROR);
+			throw new PersonException(PersonErrorCode.ID_ILLEGAL_ERROR);
 		}
 		
 		return person;
