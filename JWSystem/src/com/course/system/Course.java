@@ -18,10 +18,7 @@ public class Course implements Comparable<Course>{
 	
 	public void setCid(String cid) {
 		
-		/*
-		 * 要求前两位大写
-		 */
-		this.cid = "BH"+cid.substring(2);
+		this.cid = cid;
 	}
 	public String getCid() {
 		return this.cid;

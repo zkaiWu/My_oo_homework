@@ -2,9 +2,9 @@ package com.person.system;
 
 public class PersonException extends Exception{
 	
-	private ErrorCodeEnum errorCode;
+	private PersonErrorCode errorCode;
 	
-	public PersonException(ErrorCodeEnum ec) {
+	public PersonException(PersonErrorCode ec) {
 		this.errorCode = ec;
 	}
 	
