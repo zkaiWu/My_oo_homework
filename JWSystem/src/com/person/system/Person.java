@@ -19,7 +19,7 @@ public class Person {
 		setName("");
 		setSex(0);
 		setBirthday(new Date());
-		passWord = "a123456";
+		passWord = "a12345";
 	}
 	
 	public IDNum getId() {
