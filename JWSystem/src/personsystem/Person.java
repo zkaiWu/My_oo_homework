@@ -1,4 +1,4 @@
-package com.person.system;
+package personsystem;
 
 import java.text.SimpleDateFormat;
 
@@ -89,13 +89,13 @@ public class Person {
 		}
 		for(int i=0;i<pwd.length();i++) {
 			char c = pwd.charAt(i);
-			if(c<33||c>126) {
+			if(c<=33||c>=126) {
 				return false;
-			} else if(c>'A'&&c<'Z') {
+			} else if(c>='A'&&c<='Z') {
 				hasUpper = 1;
-			} else if(c>'a'&&c<'z') {
+			} else if(c>='a'&&c<='z') {
 				hasLower = 1;
-			} else if(c>'0'&&c<'9') {
+			} else if(c>='0'&&c<='9') {
 				hasNum=1;
 			} else {
 				hasOther = 1;

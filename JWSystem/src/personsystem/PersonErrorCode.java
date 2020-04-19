@@ -1,4 +1,4 @@
-package com.person.system;
+package personsystem;
 
 public enum PersonErrorCode {
 	

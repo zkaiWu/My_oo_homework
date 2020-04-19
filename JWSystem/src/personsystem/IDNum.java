@@ -1,4 +1,4 @@
-package com.person.system;
+package personsystem;
 
 import java.util.*;
 import java.util.regex.*;

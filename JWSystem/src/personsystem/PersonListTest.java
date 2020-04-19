@@ -1,4 +1,4 @@
-package com.person.system;
+package personsystem;
 
 import java.util.*;
 import java.util.Scanner;
@@ -205,7 +205,7 @@ class StudentLoginState implements State{
 public class PersonListTest {
 	
 	
-	public static PersonList pList = new PersonList();
+	public static PersonList pList = PersonList.getInstance();
 	public static State levelOneState = new LevelOneState(pList);
 	public static State sudoState = new SudoState(pList);
 	public static State TeacherLoginState = new TeacherLoginState(pList);

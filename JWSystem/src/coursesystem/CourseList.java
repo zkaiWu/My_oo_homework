@@ -1,4 +1,4 @@
-package com.course.system;
+package coursesystem;
 
 
 import java.util.*;
@@ -7,33 +7,45 @@ import java.util.logging.Logger;
 
 
 
-/*
+/**
  * 将courseList作为容器，只支持数据的增删查改，
  * 对数据更新之前应该调用CourseFactory来检查合法性
  * 动态的显示逻辑建议不要在此实现
  * 若要实现任何功能更加完善的显示逻辑
  * 后期可以增加一个控制器类。
  * 
- * 将接口接受统一变成了字符串
+ * 接口统一为字符串
+ * @author wzk1998
  */
 public class CourseList {
+	
+	
 	private HashMap<String,Course> courseMap;
 	
-	public CourseList() {
+	private static CourseList instance= new CourseList();
+	private CourseList() {
 		courseMap = new HashMap<>();
 	}
 	
-	
-	/*
-	 * 匹配为不区分大小写的匹配
-	 * @param keyword 查询的课程号
-	 * @return Course 符合条件的课程
+	/**
+	 * 单例模式的获取方法
+	 * @return
 	 */
-	public Course getCourseById(String cid) throws CourseNotExistException {
-		cid = cid.toUpperCase();
+	public static CourseList getInstance() {
+		return CourseList.instance;
+	}
+	
+	
+	/**
+	 * 匹配为不区分大小写的匹配
+	 * @param cid
+	 * @return
+	 * @throws CourseException
+	 */
+	public Course getCourseById(String cid) throws CourseException {
 		Course cTemp = courseMap.get(cid.toUpperCase());
 		if(cTemp == null) {
-			throw new CourseNotExistException();
+			throw new CourseException(CourseErrorCode.COURSE_NOT_EXISTS_ERROR);
 		}
 		return cTemp;
 	}
@@ -45,7 +57,7 @@ public class CourseList {
 	 * @param keyword 查询的关键字
 	 * @return ArrayList 符合条件的列表
 	 */
-	public ArrayList<Course> getCoursesByKeyword(String keyword) throws CourseNotExistException{
+	public ArrayList<Course> getCoursesByKeyword(String keyword) throws CourseException{
 		
 		
 		ArrayList<Course>  cList = new ArrayList<>();
@@ -57,7 +69,7 @@ public class CourseList {
 		
 		if(cList.size() == 0) {
 			Logger.getGlobal().info("in getCoursesByKeyword");
-			throw new CourseNotExistException();
+			throw new CourseException(CourseErrorCode.COURSE_NOT_EXISTS_ERROR);
 		}
 		
 		
@@ -76,60 +88,54 @@ public class CourseList {
 	}
 	
 	
+	
 
-	/* 大小写为相同
-	 * 从工厂生产出来的实例一定合法
-	 * 只有已存在错误
-	 * 在存键值的时候，存入大写
-	 * 
+	/**
+	 * 添加课程
+	 * 调用了工厂方法
 	 * @param cid 课程号
 	 * @param name 课程名
-	 * @param 老师名列表
-	 * @maxContent 最大人数
-	 * @return boolean 是否成功加入
+	 * @param teachersTid 教师Tid列表
+	 * @param maxContent 最大容量
+	 * @return
+	 * @throws CourseException
 	 */
-	public boolean addCourse(String cid,String name,String teachersName,String maxContent) throws CourseExistException,InputErrorException{
+	public boolean addCourse(String cid,String name,String teachersTid,String maxContent) throws CourseException{
 		
 		
 		if(courseMap.get(cid.toUpperCase())!=null) {
-			throw new CourseExistException();
+			throw new CourseException(CourseErrorCode.COURSE_EXISTS_ERROR);
 		}
 		
-		Logger.getGlobal().info(cid);
-		Course cor = CourseFactory.getNewCourse(cid, name, teachersName, maxContent);
-		Logger.getGlobal().info(cid);
-		Logger.getGlobal().info(cor.toString());
+		//抛出code为INPUT_ILLEGAL_ERROR的异常
+		Course cor = CourseFactory.getNewCourse(cid, name, teachersTid, maxContent);
+		
 		this.courseMap.put(cid.toUpperCase(),cor);
 		return true;
 		
 	}
 	
 	
-	/*
-	 * 用抛出异常来解决改变课程时的错误
-	 * 查找课程的时候是不区分大小写的匹配
-	 * 错误分为：1.输入错误，2.不存在错误
-	 * 
-	 * 因为抛出错误对效率影响较大
-	 * 在后期如果追求效率可以使用0，1，2，3等数字表示更改状态
-	 * 
+	/**
+	 * 更改课程的信息
 	 * @param cid 课程号
-	 * @param command 命令 -t,-n,-c
-	 * @param inputs 对应输入
-	 * @return boolean 是否成功加入
+	 * @param command 命令选项 -t,-c,-n
+	 * @param inputs 对应命令选项的字符串
+	 * @return
+	 * @throws CourseException
 	 */
-	public boolean modCourse(String cid,String command,String inputs) throws CourseNotExistException,InputErrorException{
+	public boolean modCourse(String cid,String command,String inputs) throws CourseException{
 		
 		
 		if(courseMap.get(cid.toUpperCase()) == null) {
-			throw new CourseNotExistException();
+			throw new CourseException(CourseErrorCode.COURSE_NOT_EXISTS_ERROR);
 		}
 		Course c = courseMap.get(cid.toUpperCase());
 		
 		
 		if(command.contentEquals("-n")) {
 			if(CourseFactory.courseNameCheck(inputs)==false) {
-				throw new InputErrorException();
+				throw new CourseException(CourseErrorCode.COURSE_UPDATE_ERROR);
 			}
 			c.setCourseName(inputs);
 			return true;
@@ -140,19 +146,19 @@ public class CourseList {
 			int len = inputs.length();
 		
 			//对教师字符串的解析
-			if(!CourseFactory.teachersNameStringCheck(inputs)){
-				throw new InputErrorException(); 
+			if(!CourseFactory.teachersTidStringCheck(inputs)){
+				throw new CourseException(CourseErrorCode.COURSE_UPDATE_ERROR); 
 			}
 			//对于教师名的解析
 			inputs = inputs.substring(1,len-1);
 			String []temp = inputs.split(",");
-			ArrayList<String> nameList = new ArrayList<>();
-			nameList.addAll(Arrays.asList(temp));
-			if(CourseFactory.teachersNameCheck(nameList)==false) {     //调用CourseFactory中的静态方法来进行检测
-				throw new InputErrorException();
+			ArrayList<String> tidList = new ArrayList<>();
+			tidList.addAll(Arrays.asList(temp));
+			if(CourseFactory.teachersTidCheck(tidList)==false) {     //调用CourseFactory中的静态方法来进行检测
+				throw new CourseException(CourseErrorCode.COURSE_UPDATE_ERROR);
 			}
 			
-			c.setTeachersName(nameList);
+			c.setTeachersName(tidList);
 			return true;
 		}
 		
@@ -161,17 +167,17 @@ public class CourseList {
 			try {
 				maxContents = Integer.parseInt(inputs);
 			} catch (NumberFormatException e) {
-				throw new InputErrorException();             //若容量不为数字
+				throw new CourseException(CourseErrorCode.COURSE_UPDATE_ERROR);             //若容量不为数字
 			}
 			if(CourseFactory.contentCheck(maxContents)==false) {
-				throw new InputErrorException();          //若容量小于-1.
+				throw new CourseException(CourseErrorCode.COURSE_UPDATE_ERROR);          //若容量小于-1.
 			}
 			else {
 				c.setMaxContent(maxContents);
 				return true;
 			}
 		}
-		throw new InputErrorException();	
+		throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);	
 	}
 	
 	
@@ -185,9 +191,9 @@ public class CourseList {
 	 * @param pageContent 一页容纳多少个课程
 	 * @return 这一页的课程列表
 	 */
-	public static ArrayList<Course> getNewPage(ArrayList<Course> courseList,int page,int pageContent) throws CourseNotExistException{
+	public static ArrayList<Course> getNewPage(ArrayList<Course> courseList,int page,int pageContent) throws CourseException{
 	
-		if(page<1) throw new CourseNotExistException();
+		if(page<1) throw new CourseException(CourseErrorCode.COURSE_NOT_EXISTS_ERROR);
 		
 		ArrayList<Course> pageList = new ArrayList<>();
 		int len = courseList.size();
@@ -195,7 +201,7 @@ public class CourseList {
 			pageList.add(courseList.get(i));
 		}
 		if(pageList.size()==0) {
-			throw new CourseNotExistException();
+			throw new CourseException(CourseErrorCode.COURSE_NOT_EXISTS_ERROR);
 		}
 		return pageList;
 	}

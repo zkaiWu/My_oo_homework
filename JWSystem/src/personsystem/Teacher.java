@@ -1,4 +1,4 @@
-package com.person.system;
+package personsystem;
 
 import java.text.SimpleDateFormat;
 
@@ -25,11 +25,13 @@ public class Teacher extends Person{
 	}
 	
 	
-	/*
-	 * 通过一个静态方法获得实例
-	 * @param name 名字
-	 * @param id 身份证号
-	 * @param TID 教师号
+	/**
+	 * 用了一个比较笨的方法创建实例
+	 * @param name
+	 * @param id
+	 * @param TID
+	 * @return
+	 * @throws PersonException
 	 */
 	public static Teacher newInstance(String name,String id,String TID) throws PersonException{
 		
