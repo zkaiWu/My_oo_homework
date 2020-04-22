@@ -77,6 +77,11 @@ public class CourseList {
 		return cList;
 	}
 
+	
+	/**
+	 * 获得所有课程的列表
+	 * @return ArrayList<Course>
+	 */
 	public ArrayList<Course> getAllCourses(){
 		ArrayList<Course> allList = new ArrayList<Course>();
 		for(String key : this.courseMap.keySet()) {

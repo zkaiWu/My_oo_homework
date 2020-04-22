@@ -20,8 +20,10 @@ public enum CourseErrorCode {
 	
 	
 	//课程增加错误
-	COURSE_ADD_ERROR("Course add illegal.");
+	COURSE_ADD_ERROR("Course add illegal."),
 	
+	//
+	RECORD_NOT_EXISTS_ERROR("Record does not exist .");
 	
 	private String description;
 	
