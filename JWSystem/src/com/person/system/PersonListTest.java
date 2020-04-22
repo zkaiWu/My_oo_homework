@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.Scanner;
 
 
+
 interface State{
 	public void handle(String[] inputs);
 }
@@ -230,6 +231,10 @@ public class PersonListTest {
 		return PersonListTest.user;
 	}
 	
+	public static void handle(String[] inputs) {
+		nowState.handle(inputs);
+	}
+	
 	public static void main(String[] args) {
 		
 		Scanner in = new Scanner(System.in);
@@ -241,7 +246,7 @@ public class PersonListTest {
 			temp = in.nextLine();
 			temp = temp.replaceAll("\\s+"," ");
 			inputs = temp.split(" ");
-			nowState.handle(inputs);
+			PersonListTest.handle(inputs);
 		}
 		
 	}

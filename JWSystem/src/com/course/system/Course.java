@@ -3,6 +3,7 @@ package com.course.system;
 import java.util.*;
 import java.util.logging.Logger;
 
+
 public class Course implements Comparable<Course>{
 	
 	private String cid;
