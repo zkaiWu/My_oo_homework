@@ -22,7 +22,7 @@ class LevelOneState implements State {
 		
 		//sudo分支
 		if(inputs.length==1&&inputs[0].contentEquals("SUDO")) {
-			PersonListTest.setNowState(PersonListTest.sudoState);
+			Test.setNowState(Test.sudoState);
 		} 
 		
 		//QUIT分支
@@ -36,8 +36,8 @@ class LevelOneState implements State {
 				try {
 					Person user = pList.teaLoginCheck(inputs[2], inputs[3]);     //如果登录成功则返回一个用户
 					System.out.println("Login success.");
-					PersonListTest.setUser(user);                           //设置用户
-					PersonListTest.setNowState(PersonListTest.TeacherLoginState);              //转换状态
+					Test.setUser(user);                           //设置用户
+					Test.setNowState(Test.TeacherLoginState);              //转换状态
 				} catch(PersonException ex) {
 					System.out.println(ex.getCodeDescription());
 				}
@@ -46,8 +46,8 @@ class LevelOneState implements State {
 				try {
 					Person user = pList.stuLoginCheck(inputs[2], inputs[3]);     //如果登录成功则返回一个用户
 					System.out.println("Login success.");
-					PersonListTest.setUser(user);                           //设置用户
-					PersonListTest.setNowState(PersonListTest.TeacherLoginState);              //转换状态
+					Test.setUser(user);                           //设置用户
+					Test.setNowState(Test.TeacherLoginState);              //转换状态
 				} catch(PersonException ex) {
 					System.out.println(ex.getCodeDescription());
 				}
@@ -82,7 +82,7 @@ class SudoState implements State {
 		
 		//back分支
 		else if(inputs.length==1&&inputs[0].contentEquals("back")) {
-			PersonListTest.setNowState(PersonListTest.levelOneState);
+			Test.setNowState(Test.levelOneState);
 		}
 		
 		else if(inputs.length==5&&inputs[0].contentEquals("np")) {
@@ -132,18 +132,18 @@ class TeacherLoginState implements State {
 		
 		//back分支
 		else if(inputs.length==1&&inputs[0].contentEquals("back")) {
-			PersonListTest.setNowState(PersonListTest.levelOneState);
+			Test.setNowState(Test.levelOneState);
 		}
 		
 		//myinfo分支
 		else if(inputs.length==1&&inputs[0].contentEquals("myinfo")) {
-			System.out.println(PersonListTest.getUser());
+			System.out.println(Test.getUser());
 		}
 		
 		//chgpw分支
 		else if(inputs.length==3&&inputs[0].contentEquals("chgpw")) {
 			try {
-				pList.chgPersonPwd(inputs[1], inputs[2], PersonListTest.getUser());
+				pList.chgPersonPwd(inputs[1], inputs[2], Test.getUser());
 				System.out.println("Password changed successfully.");
 			} catch (PersonException e) {
 				System.out.println(e.getCodeDescription());
@@ -174,18 +174,18 @@ class StudentLoginState implements State{
 		
 		//back分支
 		else if(inputs.length==1&&inputs[0].contentEquals("back")) {
-			PersonListTest.setNowState(PersonListTest.levelOneState);
+			Test.setNowState(Test.levelOneState);
 		}
 		
 		//myinfo分支
 		else if(inputs.length==1&&inputs[0].contentEquals("myinfo")) {
-			System.out.println(PersonListTest.getUser());
+			System.out.println(Test.getUser());
 		}
 		
 		//chgpw分支
 		else if(inputs.length==3&&inputs[0].contentEquals("chgpw")) {
 			try {
-				pList.chgPersonPwd(inputs[1], inputs[2], PersonListTest.getUser());
+				pList.chgPersonPwd(inputs[1], inputs[2], Test.getUser());
 				System.out.println("Password changed successfully.");
 			} catch (PersonException e) {
 				System.out.println(e.getCodeDescription());
@@ -203,7 +203,7 @@ class StudentLoginState implements State{
 /*
  * 主要测试类
  */
-public class PersonListTest {
+public class Test {
 	
 	
 	public static PersonList pList = new PersonList();
@@ -221,14 +221,14 @@ public class PersonListTest {
 		return nowState;
 	}
 	public static void setNowState(State nowState) {
-		PersonListTest.nowState = nowState;
+		Test.nowState = nowState;
 	}
 	
 	public static void setUser(Person user) {
-		PersonListTest.user =  user;
+		Test.user =  user;
 	}
 	public static Person getUser() {
-		return PersonListTest.user;
+		return Test.user;
 	}
 	
 	public static void handle(String[] inputs) {
@@ -246,7 +246,7 @@ public class PersonListTest {
 			temp = in.nextLine();
 			temp = temp.replaceAll("\\s+"," ");
 			inputs = temp.split(" ");
-			PersonListTest.handle(inputs);
+			Test.handle(inputs);
 		}
 		
 	}

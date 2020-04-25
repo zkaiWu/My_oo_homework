@@ -50,14 +50,14 @@ public class autoTest {
 	@Test
 	public void  getDataSource() throws IOException{
 		ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-		DataSource  dataSource = mapper.readValue(DataSource.class.getResourceAsStream("../jw04illegal.yml"), DataSource.class);
+		DataSource  dataSource = mapper.readValue(DataSource.class.getResourceAsStream("../jw04.yml"), DataSource.class);
 		String [][]temp = dataSource.data;
 		
 		
 		for(int i=0;i<temp.length;i++) {
 			
 			String inputs[] = temp[i][0].split(" ");
-			PersonListTest.handle(inputs);
+			com.person.system.Test.handle(inputs);
 			if(temp[i].length==2) {
 				Logger.getGlobal().info(temp[i][0]);
 				Logger.getGlobal().info(temp[i][1]);
