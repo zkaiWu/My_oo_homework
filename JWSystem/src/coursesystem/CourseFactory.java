@@ -136,7 +136,7 @@ public class CourseFactory {
 		if(CourseFactory.teachersTidCheck(nameList)==false) {
 			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
 		}
-		c.setTeachersName(nameList);
+		c.setTeachersTid(nameList);
 		
 		//对数字字符的判断
 		try {

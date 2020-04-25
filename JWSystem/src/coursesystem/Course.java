@@ -49,8 +49,11 @@ public class Course implements Comparable<Course>{
 		return this.maxContent;
 	}
 	
-	public void setTeachersName(ArrayList<String> TIDList) {
+	public void setTeachersTid(ArrayList<String> TIDList) {
 		this.teachersTID = TIDList;
+	}
+	public ArrayList<String> getTeachersTid() {
+		return this.teachersTID;
 	}
 	
 	public boolean isFull() {

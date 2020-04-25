@@ -2,6 +2,7 @@ package personsystem;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.*;
 
 import coursesystem.*;
 
@@ -28,6 +29,19 @@ public class Student extends Person implements Comparable<Student>{
 	public String getSID() {
 		return this.SID;
 	}
+	
+	public ArrayList<Course> getCourses(){
+		ArrayList<Course> cList = new ArrayList<Course>();
+		for(String key : this.coursesOfStudent.keySet()) {
+			cList.add(this.coursesOfStudent.get(key));
+		}
+		
+		//排序
+		Collections.sort(cList);
+		//
+		return cList;
+	}
+	
 	
 	
 	/**

@@ -37,7 +37,7 @@ public class CourseList {
 	
 	
 	/**
-	 * 匹配为不区分大小写的匹配
+	 * 查找时为模糊匹配
 	 * @param cid
 	 * @return
 	 * @throws CourseException
@@ -163,7 +163,7 @@ public class CourseList {
 				throw new CourseException(CourseErrorCode.COURSE_UPDATE_ERROR);
 			}
 			
-			c.setTeachersName(tidList);
+			c.setTeachersTid(tidList);
 			return true;
 		}
 		

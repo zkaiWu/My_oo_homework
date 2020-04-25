@@ -93,6 +93,8 @@ class SudoState implements State {
 			Test.setNowState(Test.levelOneState);
 		}
 		
+		
+		//np分支
 		else if(inputs.length==5&&inputs[0].contentEquals("np")) {
 			if(inputs[1].contentEquals("-t")) {
 				try {
@@ -115,6 +117,8 @@ class SudoState implements State {
 			}
 		}
 		
+		
+		//udc分支
 		else if(inputs.length==4&&inputs[0].contentEquals("udc")) {
 			try {
 				this.cList.modCourse(inputs[1], inputs[2], inputs[3]);
@@ -123,6 +127,7 @@ class SudoState implements State {
 			}
 		}
 		
+		//nc分支
 		else if(inputs.length==5&&inputs[0].contentEquals("nc")) {
 			try {
 				this.cList.addCourse(inputs[1], inputs[2], inputs[3], inputs[4]);
@@ -131,11 +136,17 @@ class SudoState implements State {
 			}
 		}
 		
-		
+		//clist分支
 		else if(inputs.length==4&&inputs[0].contentEquals("clist")) {
-			
+			try {
+				Test.getQueryHelper().queryForClist(inputs[1], inputs[2], inputs[3]);
+			} catch(CourseException ex) {
+				System.out.println(ex);
+			}
 		}
 		
+		
+		//错误分支
 		else {
 			System.out.println("Input illegal.");
 		}
@@ -178,6 +189,50 @@ class TeacherLoginState implements State {
 				System.out.println("Password changed successfully.");
 			} catch (PersonException e) {
 				System.out.println(e.getCodeDescription());
+			}
+		}
+		
+		//clist分支
+		else if(inputs.length==4&&inputs[0].contentEquals("clist")) {
+			try {
+				Test.getQueryHelper().queryForClist(inputs[1], inputs[2], inputs[3]);
+			} catch (CourseException ex) {
+				System.out.println(ex.getCodeDescription());
+			}
+		}
+		
+		
+		//myc分支
+		else if(inputs.length==3&&inputs[0].contentEquals("myc")) {
+			try {
+				Teacher teacher = (Teacher)Test.getUser();
+				Test.getQueryHelper().queryForCoursesOfTeacher(teacher.getTID(),inputs[1], inputs[2]);
+			} catch (CourseException e) {
+				System.out.println(e.getCodeDescription());
+			}
+		}
+		
+		
+		//gc分支
+		else if(inputs.length==3&&inputs[0].contentEquals("gc")) {
+			if(inputs[1].contentEquals("-id")) {
+				try {
+					Test.getQueryHelper().queryForCourseById(inputs[1]);
+				} catch (CourseException ex) {
+					System.out.println(ex.getCodeDescription());
+				}
+			} else if(inputs[1].contentEquals("-key")) {
+				try {
+					Test.getQueryHelper().queryForCoursesByKey(inputs[1], inputs[2], inputs[3]);
+				} catch (CourseException ex) {
+					System.out.println(ex.getCodeDescription());
+				}
+			} else if(inputs[1].contentEquals("-all")) {
+				try {
+					Test.getQueryHelper().queryForAllCourses(inputs[1], inputs[2]);
+				} catch (CourseException ex) {
+					System.out.println(ex.getCodeDescription());
+				}
 			}
 		}
 		
@@ -225,6 +280,67 @@ class StudentLoginState implements State{
 			}
 		}		
 		
+		//gc分支
+		else if(inputs.length==3&&inputs[0].contentEquals("gc")) {
+			if(inputs[1].contentEquals("-id")) {
+				try {
+					Test.getQueryHelper().queryForCourseById(inputs[1]);
+				} catch (CourseException ex) {
+					System.out.println(ex.getCodeDescription());
+				}
+			} else if(inputs[1].contentEquals("-key")) {
+				try {
+					Test.getQueryHelper().queryForCoursesByKey(inputs[1], inputs[2], inputs[3]);
+				} catch (CourseException ex) {
+					System.out.println(ex.getCodeDescription());
+				}
+			} else if(inputs[1].contentEquals("-all")) {
+				try {
+					Test.getQueryHelper().queryForAllCourses(inputs[1], inputs[2]);
+				} catch (CourseException ex) {
+					System.out.println(ex.getCodeDescription());
+				}
+			}
+		}
+		
+		
+		//getc分支
+		else if(inputs.length==2&&inputs[0].contentEquals("getc")) {
+			
+			Student student = (Student) Test.getUser();
+			try {
+				student.chooseCourse(inputs[1]);
+			} catch (CourseException e) {
+				System.out.println(e.getCodeDescription());
+			}
+		}
+		
+		//dropc分支
+		else if(inputs.length==2&&inputs[0].contentEquals("dropc")) {
+			
+			Student student = (Student) Test.getUser();
+			try {
+				student.dropCourse(inputs[1]);
+			} catch (CourseException e) {
+				System.out.println(e.getCodeDescription());
+			}
+			
+		}
+		
+		//myc分支
+		else if(inputs.length==3&&inputs[0].contentEquals("myc")) {
+			try {
+				Student student = (Student) Test.getUser();
+				Test.getQueryHelper().queryForCourseOfStudent(student.getSID(),inputs[1], inputs[2]);
+			} catch (CourseException e) {
+				System.out.println(e.getCodeDescription());
+			} catch (PersonException ex) {
+				System.out.println(ex.getCodeDescription());
+			}
+		}
+		
+		
+		
 		//错误分支
 		else {
 			System.out.println("Inputs illegal.");
@@ -247,6 +363,7 @@ public class Test {
 	public static State StudentLoginState = new StudentLoginState(pList,cList);
 	
 	private static State nowState = levelOneState;
+	private static QueryHelper queryHelper = new QueryHelper(pList, cList);
 	private static Person user;
 	
 	
@@ -264,6 +381,15 @@ public class Test {
 	public static Person getUser() {
 		return Test.user;
 	}
+
+	
+	public static QueryHelper getQueryHelper() {
+		return queryHelper;
+	}
+	public static void setQueryHelper(QueryHelper queryHelper) {
+		Test.queryHelper = queryHelper;
+	}
+	
 	
 	public static void main(String[] args) {
 		
