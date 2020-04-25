@@ -24,6 +24,11 @@ public class CourseFactory {
 		return true;
 	}
 	
+	
+	public static boolean courseIdCheck(String cid) {
+		String rex = "^[bB][hH]\\d{8}$";
+		return cid.matches(rex);
+	}
 	/**
 	 * 检查课程名是否合法
 	 * @param name
@@ -68,9 +73,20 @@ public class CourseFactory {
 	 * @return
 	 */
 	public static boolean teachersTidCheck(ArrayList<String> tidsList) {
+		
+		//判断教师名合法
 		for(String tid : tidsList) {
-			if(!Teacher.checkTID(tid)==false) {
+			if(Teacher.checkTID(tid)==false) {
 				return false;
+			}
+		}
+		
+		//判断是否重复
+		for(int i=0;i<tidsList.size();i++) {
+			for(int j=0;j<tidsList.size();j++) {
+				if(j!=i&&tidsList.get(i).contentEquals(tidsList.get(j))) {
+					return false;
+				}
 			}
 		}
 		return true;
@@ -106,9 +122,12 @@ public class CourseFactory {
 		
 		
 		Course c = new Course();
+		if(CourseFactory.courseIdCheck(cid)==false) {
+			throw new CourseException(CourseErrorCode.COURSE_ADD_ERROR);
+		}
 		c.setCid(cid);
 		if(CourseFactory.courseNameCheck(name)==false) {
-			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
+			throw new CourseException(CourseErrorCode.COURSE_ADD_ERROR);
 		}
 		c.setCourseName(name);
 		
@@ -134,20 +153,24 @@ public class CourseFactory {
 		ArrayList<String> nameList = new ArrayList<>();
 		nameList.addAll(Arrays.asList(temp));
 		if(CourseFactory.teachersTidCheck(nameList)==false) {
-			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
+			throw new CourseException(CourseErrorCode.COURSE_ADD_ERROR);
 		}
 		c.setTeachersTid(nameList);
 		
 		//对数字字符的判断
 		try {
 			int mc = Integer.parseInt(maxContent);
-			if(CourseFactory.contentCheck(mc)==false) throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
+			if(CourseFactory.contentCheck(mc)==false) throw new CourseException(CourseErrorCode.COURSE_ADD_ERROR);
 			c.setMaxContent(mc);
 		}catch(NumberFormatException ex){
-			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
+			throw new CourseException(CourseErrorCode.COURSE_ADD_ERROR);
 		}
 		
 		return c;
 	}
 
+	
+	public static void main(String[] args) {
+		System.out.println(CourseFactory.teachersNameStringCheck("[]]"));
+	}
 }
