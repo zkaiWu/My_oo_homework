@@ -2,6 +2,7 @@ package com.person.system;
 
 import java.util.*;
 import java.util.Scanner;
+import java.util.logging.*;;
 
 
 
@@ -240,6 +241,7 @@ public class Test {
 		Scanner in = new Scanner(System.in);
 		String temp = "";
 		String[] inputs;
+		Logger.getGlobal().setLevel(Level.OFF);;
 		
 		
 		while(in.hasNext()) {
