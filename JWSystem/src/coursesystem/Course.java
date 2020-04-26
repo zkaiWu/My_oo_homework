@@ -25,6 +25,7 @@ public class Course implements Comparable<Course>{
 		this.cid = "";
 		this.courseName = "";
 		this.teachersTID = new ArrayList<>();
+		this.stusOfCourse = new HashMap<String, Student>();
 	}
 	
 	public void setCid(String cid) {

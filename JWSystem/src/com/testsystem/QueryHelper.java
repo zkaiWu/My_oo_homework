@@ -1,3 +1,4 @@
+package com.testsystem;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Scanner;
@@ -46,7 +47,6 @@ public class QueryHelper {
 			page = Integer.parseInt(pageString);
 			pageContext = Integer.parseInt(pageContentString);
 		} catch(NumberFormatException ex) {
-			in.close();
 			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);              //	输入错误	
 		}
 		
@@ -57,8 +57,10 @@ public class QueryHelper {
 			int end = Math.min(pageContext*page,len);
 			
 			//页面为空
-			if(end<start) {
-				in.close();
+			if(start<0) {
+				throw new CourseException(CourseErrorCode.RECORD_NOT_EXISTS_ERROR);
+			}
+			if(end<=start) {
 				throw new CourseException(CourseErrorCode.RECORD_NOT_EXISTS_ERROR);
 			}
 			//输出页面
@@ -72,13 +74,11 @@ public class QueryHelper {
 			String opt = in.nextLine();
 			if(opt.contentEquals("n")) {
 				page++;
-			} else if(opt.contentEquals("-l")) {
+			} else if(opt.contentEquals("l")) {
 				page--;
 			} else if(opt.contentEquals("q")) {
-				in.close();
 				return;
 			} else {
-				in.close();
 				throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
 			}
 		}
@@ -107,6 +107,7 @@ public class QueryHelper {
 				}
 			}
 		}
+		//按照课程号排序
 		Collections.sort(coursesOfTeacher);
 		
 		//获得参数
@@ -116,7 +117,6 @@ public class QueryHelper {
 			page = Integer.parseInt(pageString);
 			pageContext = Integer.parseInt(pageContentString);
 		} catch(NumberFormatException ex) {
-			in.close();
 			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);              //	输入错误	
 		}
 		
@@ -126,8 +126,11 @@ public class QueryHelper {
 			int end = Math.min(pageContext*page,len);
 			
 			//页面为空
+
+			if(start<0) {
+				throw new CourseException(CourseErrorCode.RECORD_NOT_EXISTS_ERROR);
+			}
 			if(end<=start) {
-				in.close();
 				throw new CourseException(CourseErrorCode.RECORD_NOT_EXISTS_ERROR);
 			}
 			
@@ -144,13 +147,11 @@ public class QueryHelper {
 			String opt = in.nextLine();
 			if(opt.contentEquals("n")) {
 				page++;
-			} else if(opt.contentEquals("-l")) {
+			} else if(opt.contentEquals("l")) {
 				page--;
 			} else if(opt.contentEquals("q")) {
-				in.close();
 				return;
 			} else {
-				in.close();
 				throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
 			}
 		}
@@ -188,8 +189,10 @@ public class QueryHelper {
 			int end = Math.min(pageContent*page,len);
 			
 			//页面为空
-			if(end<=start) {
-				in.close();
+			if(start<0) {
+				throw new CourseException(CourseErrorCode.RECORD_NOT_EXISTS_ERROR);
+			}
+			if(start>=end) {
 				throw new CourseException(CourseErrorCode.RECORD_NOT_EXISTS_ERROR);
 			}
 			
@@ -206,13 +209,11 @@ public class QueryHelper {
 			String opt = in.nextLine();
 			if(opt.contentEquals("n")) {
 				page++;
-			} else if(opt.contentEquals("-l")) {
+			} else if(opt.contentEquals("l")) {
 				page--;
 			} else if(opt.contentEquals("q")) {
-				in.close();
 				return;
 			} else {
-				in.close();
 				throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
 			}
 		}
@@ -248,7 +249,6 @@ public class QueryHelper {
 			page = Integer.parseInt(pageString);
 			pageContent = Integer.parseInt(pageContentString);
 		} catch (NumberFormatException e) {
-			in.close();
 			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
 		}
 		
@@ -257,31 +257,31 @@ public class QueryHelper {
 			int end = Math.min(pageContent*page,len);
 			
 			//页面为空
+			if(start<0) {
+				throw new CourseException(CourseErrorCode.RECORD_NOT_EXISTS_ERROR);
+			}
 			if(end<=start) {
-				in.close();
 				throw new CourseException(CourseErrorCode.RECORD_NOT_EXISTS_ERROR);
 			}
 			
 			//输出页面
 			System.out.println("page:"+page);
 			for(int i=start; i<end; i++) {
-				System.out.println(courseList.get(i));
+				System.out.println((i-start+1)+"."+courseList.get(i));
 			}
 			
 			System.out.println("n-next page, l-last page, q-quit");
 			
 			String opt = in.nextLine();
 			
-			if(opt.contentEquals("-n")) {
+			if(opt.contentEquals("n")) {
 				page++;
-			} else if(opt.contentEquals("-l")) {
+			} else if(opt.contentEquals("l")) {
 				page--;
-			} else if(opt.contentEquals("-q")) {
-				in.close();
+			} else if(opt.contentEquals("q")) {
 				return;
 			} else {
-				in.close();
-				throw new CourseException(CourseErrorCode.RECORD_NOT_EXISTS_ERROR);
+				throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
 			}
 		}
 	}
@@ -297,7 +297,6 @@ public class QueryHelper {
 			page = Integer.parseInt(pageString);
 			pageContent = Integer.parseInt(pageContentString);
 		} catch (NumberFormatException e) {
-			in.close();
 			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
 		}
 		
@@ -306,31 +305,31 @@ public class QueryHelper {
 			int end = Math.min(pageContent*page,len);
 			
 			//页面为空
+			if(start<0) {
+				throw new CourseException(CourseErrorCode.RECORD_NOT_EXISTS_ERROR);
+			}
 			if(end<=start) {
-				in.close();
 				throw new CourseException(CourseErrorCode.RECORD_NOT_EXISTS_ERROR);
 			}
 			
 			//输出页面
 			System.out.println("page:"+page);
 			for(int i=start; i<end; i++) {
-				System.out.println(courseList.get(i));
+				System.out.println((i-start+1)+"."+courseList.get(i));
 			}
 			
 			System.out.println("n-next page, l-last page, q-quit");
 			
 			String opt = in.nextLine();
 			
-			if(opt.contentEquals("-n")) {
+			if(opt.contentEquals("n")) {
 				page++;
-			} else if(opt.contentEquals("-l")) {
+			} else if(opt.contentEquals("l")) {
 				page--;
-			} else if(opt.contentEquals("-q")) {
-				in.close();
+			} else if(opt.contentEquals("q")) {
 				return;
 			} else {
-				in.close();
-				throw new CourseException(CourseErrorCode.RECORD_NOT_EXISTS_ERROR);
+				throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
 			}
 		}		
 	}
