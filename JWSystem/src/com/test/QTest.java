@@ -1,4 +1,4 @@
-package com.testsystem;
+package com.test;
 
 
 import java.util.*;
@@ -144,7 +144,7 @@ class SudoState implements State {
 			try {
 				QTest.getQueryHelper().queryForClist(inputs[1], inputs[2], inputs[3]);
 			} catch(CourseException ex) {
-				System.out.println(ex);
+				System.out.println(ex.getCodeDescription());
 			}
 		}
 		
@@ -315,6 +315,7 @@ class StudentLoginState implements State{
 			Student student = (Student) QTest.getUser();
 			try {
 				student.chooseCourse(inputs[1]);
+				System.out.println("Course chosen success.");
 			} catch (CourseException e) {
 				System.out.println(e.getCodeDescription());
 			}
@@ -326,6 +327,7 @@ class StudentLoginState implements State{
 			Student student = (Student) QTest.getUser();
 			try {
 				student.dropCourse(inputs[1]);
+				System.out.println("Drop out successful.");
 			} catch (CourseException e) {
 				System.out.println(e.getCodeDescription());
 			}

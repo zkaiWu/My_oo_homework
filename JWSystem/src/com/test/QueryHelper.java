@@ -1,4 +1,4 @@
-package com.testsystem;
+package com.test;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Scanner;
@@ -66,7 +66,7 @@ public class QueryHelper {
 			//输出页面
 			System.out.println("page:"+page);
 			for(int i=start; i<end; i++) {
-				System.out.println((i-start+1)+"."+stuList.get(i).getSID()+stuList.get(i).getName());
+				System.out.println((i-start+1)+"."+stuList.get(i).getSID()+","+stuList.get(i).getName());
 			}
 			//输出选择界面
 			System.out.println("n-next page, l-last page, q-quit");

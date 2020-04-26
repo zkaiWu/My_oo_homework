@@ -14,6 +14,10 @@ public class Person {
 	private Date birthday;
 	private String passWord;
 	
+	
+	/**
+	 * 使用getNewPerson创建新对象
+	 */
 	public Person() {
 		setId(new IDNum());
 		setName("");
@@ -109,12 +113,12 @@ public class Person {
 	
 	
 	
-	/*
-	 * @param name 名字
-	 * @param id 身份证号
-	 * @param stID 教室号或学生号
-	 * @param type 学生或者老师
-	 * @return Person 实例
+	/**
+	 * 工厂方法来创建实例
+	 * @param name
+	 * @param id
+	 * @return
+	 * @throws PersonException
 	 */
 	public static Person newPerson(String name,String id) throws PersonException{
 		

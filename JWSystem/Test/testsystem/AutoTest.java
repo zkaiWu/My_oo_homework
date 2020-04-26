@@ -1,6 +1,7 @@
 package testsystem;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -23,11 +24,10 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.logging.*;
 import com.fasterxml.jackson.dataformat.*;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.testsystem.QTest;
+import com.test.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import personsystem.*;
-
 
 
 
@@ -46,19 +46,18 @@ public class AutoTest {
 	
 	}
 	
-	
 	@Test
-	public void  getDataSource() throws IOException{
+	public void getData() throws IOException{
 		ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 		Logger.getGlobal().info("haha");
-		DataSource  dataSource = mapper.readValue(DataSource.class.getResourceAsStream("../jw05-my.yml"), DataSource.class);
+		DataSource  dataSource = mapper.readValue(DataSource.class.getResourceAsStream("../jw04.yml"), DataSource.class);
 		String [][]temp = dataSource.data;
 		
 		
 		for(int i=0;i<temp.length;i++) {
 			
 			String inputs[] = temp[i][0].split(" ");
-			QTest.handle(inputs);
+			com.test.QTest.handle(inputs);
 			if(temp[i].length==1) {
 				Logger.getGlobal().info(temp[i][0]);
 				assertEquals("", this.byteArrayOutputStream.toString());

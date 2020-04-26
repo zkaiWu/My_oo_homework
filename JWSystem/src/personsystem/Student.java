@@ -17,10 +17,14 @@ public class Student extends Person implements Comparable<Student>{
 	//课程列表单例，用于查找课程并选课
 	private CourseList courseList = CourseList.getInstance();
 	
-	
-	public Student() {
+	/**
+	 * 使用newInstance()创建新对象
+	 *
+	 */
+	private Student() {
 		super();
 		this.SID = "";
+		this.coursesOfStudent = new HashMap<String, Course>();
 	}
 	
 	public void setSID(String sid) {
