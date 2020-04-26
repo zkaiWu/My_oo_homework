@@ -50,7 +50,7 @@ public class autoTest {
 	@Test
 	public void  getDataSource() throws IOException{
 		ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-		DataSource  dataSource = mapper.readValue(DataSource.class.getResourceAsStream("../jw04.yml"), DataSource.class);
+		DataSource  dataSource = mapper.readValue(DataSource.class.getResourceAsStream("../jw04-samshui.yml"), DataSource.class);
 		String [][]temp = dataSource.data;
 		
 		

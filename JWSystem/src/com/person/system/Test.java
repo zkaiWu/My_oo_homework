@@ -48,7 +48,7 @@ class LevelOneState implements State {
 					Person user = pList.stuLoginCheck(inputs[2], inputs[3]);     //如果登录成功则返回一个用户
 					System.out.println("Login success.");
 					Test.setUser(user);                           //设置用户
-					Test.setNowState(Test.TeacherLoginState);              //转换状态
+					Test.setNowState(Test.StudentLoginState);              //转换状态
 				} catch(PersonException ex) {
 					System.out.println(ex.getCodeDescription());
 				}
