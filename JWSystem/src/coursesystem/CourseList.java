@@ -131,58 +131,63 @@ public class CourseList {
 	 */
 	public boolean modCourse(String cid,String command,String inputs) throws CourseException{
 		
-		
-		if(courseMap.get(cid.toUpperCase()) == null) {
-			throw new CourseException(CourseErrorCode.COURSE_NOT_EXISTS_ERROR);
-		}
-		Course c = courseMap.get(cid.toUpperCase());
-		
-		
 		if(command.contentEquals("-n")) {
-			if(CourseFactory.courseNameCheck(inputs)==false) {
-				throw new CourseException(CourseErrorCode.COURSE_UPDATE_ERROR);
+			if(courseMap.get(cid.toUpperCase()) == null) {
+				throw new CourseException(CourseErrorCode.COURSE_NOT_EXISTS_ERROR);
 			}
-			c.setCourseName(inputs);
-			return true;
+			Course c = courseMap.get(cid.toUpperCase());
+			try {
+				if(CourseFactory.courseNameCheck(inputs)) {
+					throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
+				}
+				CourseFactory.setNameForCourse(c,inputs);
+			} catch (CourseException e) {
+				if(e.getCode()==CourseErrorCode.INPUT_ILLEGAL_ERROR) {
+					throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
+				}
+				else{
+					throw new CourseException(CourseErrorCode.COURSE_UPDATE_ERROR);
+				}
+			}
 		}
 		
 		else if(command.contentEquals("-t")) {
-			
-			int len = inputs.length();
-		
-			//对教师字符串的解析
-			if(!CourseFactory.teachersTidStringCheck(inputs)){
-				throw new CourseException(CourseErrorCode.COURSE_UPDATE_ERROR); 
+			if(courseMap.get(cid.toUpperCase()) == null) {
+				throw new CourseException(CourseErrorCode.COURSE_NOT_EXISTS_ERROR);
 			}
-			//对于教师名的解析
-			inputs = inputs.substring(1,len-1);
-			String []temp = inputs.split(",");
-			ArrayList<String> tidList = new ArrayList<>();
-			tidList.addAll(Arrays.asList(temp));
-			if(CourseFactory.teachersTidCheck(tidList)==false) {     //调用CourseFactory中的静态方法来进行检测
-				throw new CourseException(CourseErrorCode.COURSE_UPDATE_ERROR);
+			Course c = courseMap.get(cid.toUpperCase());
+			try {
+				CourseFactory.setTidsForCourse(c,inputs);
+			} catch (CourseException e) {
+				if(e.getCode()==CourseErrorCode.INPUT_ILLEGAL_ERROR) {
+					throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
+				}
+				else{
+					throw new CourseException(CourseErrorCode.COURSE_UPDATE_ERROR);
+				}
 			}
-			
-			c.setTeachersTid(tidList);
-			return true;
 		}
 		
 		else if(command.contentEquals("-c")) {
-			int maxContents=0;
+			if(courseMap.get(cid.toUpperCase()) == null) {
+				throw new CourseException(CourseErrorCode.COURSE_NOT_EXISTS_ERROR);
+			}
+			Course c = courseMap.get(cid.toUpperCase());
 			try {
-				maxContents = Integer.parseInt(inputs);
-			} catch (NumberFormatException e) {
-				throw new CourseException(CourseErrorCode.COURSE_UPDATE_ERROR);             //若容量不为数字
-			}
-			if(CourseFactory.contentCheck(maxContents)==false) {
-				throw new CourseException(CourseErrorCode.COURSE_UPDATE_ERROR);          //若容量小于-1.
-			}
-			else {
-				c.setMaxContent(maxContents);
-				return true;
+				CourseFactory.setMaxContentForCourse(c, inputs);
+			} catch (CourseException e) {
+				if(e.getCode()==CourseErrorCode.INPUT_ILLEGAL_ERROR) {
+					throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
+				}
+				else{
+					throw new CourseException(CourseErrorCode.COURSE_UPDATE_ERROR);
+				}
 			}
 		}
-		throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);	
+		else {
+			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
+		}
+		return true;
 	}
 	
 	
@@ -191,11 +196,15 @@ public class CourseList {
 	 * 可能会有很多bug (๑•̀ㅂ•́)و✧
 	 * 不需要深拷贝，因为没有改变值
 	 * 
+	 * 
+	 * 已经弃用
+	 * 
 	 * @param courseList 课程列表
 	 * @param page 页码
 	 * @param pageContent 一页容纳多少个课程
 	 * @return 这一页的课程列表
 	 */
+	@Deprecated
 	public static ArrayList<Course> getNewPage(ArrayList<Course> courseList,int page,int pageContent) throws CourseException{
 	
 		if(page<1) throw new CourseException(CourseErrorCode.COURSE_NOT_EXISTS_ERROR);

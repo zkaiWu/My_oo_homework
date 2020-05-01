@@ -2,6 +2,7 @@ package com.test;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Scanner;
+import java.util.logging.Logger;
 import java.util.*;
 
 import coursesystem.*;
@@ -258,18 +259,19 @@ public class QueryHelper {
 			
 			//页面为空
 			if(start<0) {
-				throw new CourseException(CourseErrorCode.RECORD_NOT_EXISTS_ERROR);
+				throw new CourseException(CourseErrorCode.COURSE_NOT_EXISTS_ERROR);
 			}
 			if(end<=start) {
-				throw new CourseException(CourseErrorCode.RECORD_NOT_EXISTS_ERROR);
+				throw new CourseException(CourseErrorCode.COURSE_NOT_EXISTS_ERROR);
 			}
+			
+			Logger.getGlobal().info("haha");
 			
 			//输出页面
 			System.out.println("page:"+page);
 			for(int i=start; i<end; i++) {
 				System.out.println((i-start+1)+"."+courseList.get(i));
 			}
-			
 			System.out.println("n-next page, l-last page, q-quit");
 			
 			String opt = in.nextLine();
@@ -279,7 +281,7 @@ public class QueryHelper {
 			} else if(opt.contentEquals("l")) {
 				page--;
 			} else if(opt.contentEquals("q")) {
-				return;
+				break;
 			} else {
 				throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
 			}
@@ -306,10 +308,10 @@ public class QueryHelper {
 			
 			//页面为空
 			if(start<0) {
-				throw new CourseException(CourseErrorCode.RECORD_NOT_EXISTS_ERROR);
+				throw new CourseException(CourseErrorCode.COURSE_NOT_EXISTS_ERROR);
 			}
 			if(end<=start) {
-				throw new CourseException(CourseErrorCode.RECORD_NOT_EXISTS_ERROR);
+				throw new CourseException(CourseErrorCode.COURSE_NOT_EXISTS_ERROR);
 			}
 			
 			//输出页面

@@ -12,4 +12,8 @@ public class CourseException extends Exception{
 		return this.code.getDescription();
 	}
 	
+	public CourseErrorCode getCode() {
+		return this.code;
+	}
+	
 }	

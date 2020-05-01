@@ -120,13 +120,13 @@ public class Course implements Comparable<Course>{
 				try {
 					s += this.personList.getPersonBySTID(this.teachersTID.get(i)).getName() + ",";
 				} catch(PersonException ex) {
-					s += "noPerson"+",";                   //教师号不存在时的处理
+					s += this.teachersTID.get(i)+",";                   //教师号不存在时的处理
 				}
 			}
 			try {
 				s += this.personList.getPersonBySTID(this.teachersTID.get(this.teachersTID.size()-1)).getName();
 			} catch(PersonException ex) {
-				s += "noPerson";                    //教师号不存在时的处理
+				s += this.teachersTID.get(this.teachersTID.size()-1);                    //教师号不存在时的处理
 			}
 			
 		}
@@ -136,6 +136,7 @@ public class Course implements Comparable<Course>{
 		
 		temp += s+",";
 		temp += "Capacity:" + this.stuNum+"/"+this.maxContent;
+		Logger.getGlobal().info("temp == "+temp);
 		return temp;
 	}
 

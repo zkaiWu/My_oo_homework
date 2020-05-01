@@ -2,7 +2,6 @@ package testsystem;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,12 +25,12 @@ import com.fasterxml.jackson.dataformat.*;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.person.system.*;
+import personsystem.*;
 
 
 
 
-public class autoTest {
+public class AutoTest {
  
 	
 	private ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -50,15 +49,20 @@ public class autoTest {
 	@Test
 	public void  getDataSource() throws IOException{
 		ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-		DataSource  dataSource = mapper.readValue(DataSource.class.getResourceAsStream("../jw04-samshui.yml"), DataSource.class);
+		DataSource  dataSource = mapper.readValue(DataSource.class.getResourceAsStream("../jw05-arg.yml"),DataSource.class);
 		String [][]temp = dataSource.data;
-		
+		Logger.getGlobal().info("temp length"+String.valueOf(temp.length));
 		
 		for(int i=0;i<temp.length;i++) {
 			
 			String inputs[] = temp[i][0].split(" ");
-			com.person.system.Test.handle(inputs);
-			if(temp[i].length==2) {
+			com.test.QTest.handle(inputs);
+			if(temp[i].length==1) {
+				Logger.getGlobal().info(temp[i][0]);
+				Logger.getGlobal().info(this.byteArrayOutputStream.toString());
+				assertEquals("", this.byteArrayOutputStream.toString());
+			}
+			else if(temp[i].length==2) {
 				Logger.getGlobal().info(temp[i][0]);
 				Logger.getGlobal().info(temp[i][1]);
 				Logger.getGlobal().info(this.byteArrayOutputStream.toString());

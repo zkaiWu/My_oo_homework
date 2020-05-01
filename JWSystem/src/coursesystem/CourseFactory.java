@@ -2,6 +2,8 @@ package coursesystem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.regex.*;
 
 import personsystem.*;
@@ -105,36 +107,45 @@ public class CourseFactory {
 		return true;
 	}
 	
-	
-	
-	/*
-	 * 工厂模式
-	 * 将字符串信息打包成Course类型
-	 * Course生成中所有的检测将会在这儿做
-	 * 
-	 * @param cid 课程id
-	 * @param name 课程名
-	 * @param teachersName 教师列表
-	 * @param maxContent 课程容量字符串表示
-	 * @return 一个Course类实例
+	/**
+	 * 设置课程cid的方法
+	 * @param course
+	 * @param cid
+	 * @throws CourseException
 	 */
-	public static Course getNewCourse(String cid,String name,String teachersTid,String maxContent) throws CourseException{
-		
-		
-		Course c = new Course();
+	public static void setCIDForCourse(Course course,String cid) throws CourseException{
 		if(CourseFactory.courseIdCheck(cid)==false) {
-			throw new CourseException(CourseErrorCode.COURSE_ADD_ERROR);
+			throw new CourseException(CourseErrorCode.DATA_ILLEGAL_ERROR);
 		}
-		c.setCid(cid);
-		if(CourseFactory.courseNameCheck(name)==false) {
-			throw new CourseException(CourseErrorCode.COURSE_ADD_ERROR);
+		course.setCid(cid);
+	}
+	
+	public static void setNameForCourse(Course course,String name) throws CourseException{
+		if(courseNameCheck(name)==false) {
+			throw new CourseException(CourseErrorCode.DATA_ILLEGAL_ERROR);
 		}
-		c.setCourseName(name);
-		
-		int len = teachersTid.length();
+		course.setCourseName(name);
+	}
+	
+	
+	 /**
+	  * 设置课程号的方法
+	  * @param course
+	  * @param tidsList
+	  * @throws CourseException
+	  */
+	public static void setTidsForCourse(Course course,ArrayList<String> tidsList) throws CourseException{
+		if(CourseFactory.teachersTidCheck(tidsList)==false) {
+			throw new CourseException(CourseErrorCode.DATA_ILLEGAL_ERROR);
+		}
+		Collections.sort(tidsList);
+		course.setTeachersTid(tidsList);
+	}
+	public static void setTidsForCourse(Course course,String teachersTid) throws CourseException{
 		
 		
 		//对教师名字串的判断
+		int len = teachersTid.length();
 		if(teachersTid.charAt(0)!='['||teachersTid.charAt(len-1)!=']') {
 			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);             //若不已[开头]结尾，则不对
 		}
@@ -144,33 +155,58 @@ public class CourseFactory {
 		teachersTid = teachersTid.substring(1,len);
 		len = teachersTid.length();
 		teachersTid = teachersTid.substring(0,len-1);
-		
+				
 		//对教师名字的判断
 		String[] temp = teachersTid.split(",");
 		for(int i=0;i<temp.length;i++) {
 			temp[i] = temp[i].replaceFirst("\\s+", "");
 		}
-		ArrayList<String> nameList = new ArrayList<>();
-		nameList.addAll(Arrays.asList(temp));
-		if(CourseFactory.teachersTidCheck(nameList)==false) {
-			throw new CourseException(CourseErrorCode.COURSE_ADD_ERROR);
-		}
-		c.setTeachersTid(nameList);
-		
-		//对数字字符的判断
+		ArrayList<String> tidsList = new ArrayList<>();
+		tidsList.addAll(Arrays.asList(temp));
+		CourseFactory.setTidsForCourse(course,tidsList);
+	}
+	
+	public static void setMaxContentForCourse(Course course,String maxContent) throws CourseException {
+		int mc = 0;
 		try {
-			int mc = Integer.parseInt(maxContent);
-			if(CourseFactory.contentCheck(mc)==false) throw new CourseException(CourseErrorCode.COURSE_ADD_ERROR);
-			c.setMaxContent(mc);
+			mc = Integer.parseInt(maxContent);
+			if(CourseFactory.contentCheck(mc)==false) throw new CourseException(CourseErrorCode.DATA_ILLEGAL_ERROR);
 		}catch(NumberFormatException ex){
-			throw new CourseException(CourseErrorCode.COURSE_ADD_ERROR);
+			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
 		}
+		course.setMaxContent(mc);
+	}
+	
+	
+	
+	/**
+	 * 工厂模式
+	 * 用工厂方法装配课程实例
+	 * @param cid
+	 * @param name
+	 * @param teachersTid
+	 * @param maxContent
+	 * @return
+	 * @throws CourseException
+	 */
+	public static Course getNewCourse(String cid,String name,String teachersTid,String maxContent) throws CourseException{
 		
+		//装配课程实例
+		Course c = new Course();
+		try {
+			CourseFactory.setMaxContentForCourse(c,maxContent);
+			CourseFactory.setCIDForCourse(c,cid);
+			CourseFactory.setNameForCourse(c,name);
+			CourseFactory.setTidsForCourse(c, teachersTid);
+		} catch (CourseException ex) {
+			if(ex.getCode()==CourseErrorCode.INPUT_ILLEGAL_ERROR) {
+				throw ex;
+			}
+			else{
+				throw new CourseException(CourseErrorCode.COURSE_ADD_ERROR);
+			}
+		}
 		return c;
 	}
 
-	
-	public static void main(String[] args) {
-		System.out.println(CourseFactory.teachersNameStringCheck("[]]"));
-	}
 }

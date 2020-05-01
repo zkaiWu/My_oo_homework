@@ -1,8 +1,8 @@
+
 package com.test;
 
 
 import java.util.*;
-
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -124,6 +124,7 @@ class SudoState implements State {
 		else if(inputs.length==4&&inputs[0].contentEquals("udc")) {
 			try {
 				this.cList.modCourse(inputs[1], inputs[2], inputs[3]);
+				System.out.println("Update success.");
 			} catch (CourseException e) {
 				System.out.println(e.getCodeDescription());
 			}
@@ -133,7 +134,6 @@ class SudoState implements State {
 		else if(inputs.length==5&&inputs[0].contentEquals("nc")) {
 			try {
 				this.cList.addCourse(inputs[1], inputs[2], inputs[3], inputs[4]);
-				System.out.println("add course success");
 			} catch (CourseException ex) {
 				System.out.println(ex.getCodeDescription());
 			}
@@ -218,30 +218,32 @@ class TeacherLoginState implements State {
 		
 		//gc分支
 		else if(inputs[0].contentEquals("gc")) {
-			if(inputs[1].contentEquals("-id")&&inputs.length==3) {
+			if(inputs.length==3&&inputs[1].contentEquals("-id")) {
 				try {
 					QTest.getQueryHelper().queryForCourseById(inputs[2]);
 				} catch (CourseException ex) {
 					System.out.println(ex.getCodeDescription());
 				}
-			} else if(inputs[1].contentEquals("-key")&&inputs.length==5) {
+			} else if(inputs.length==5&&inputs[1].contentEquals("-key")) {
 				try {
 					QTest.getQueryHelper().queryForCoursesByKey(inputs[2], inputs[3], inputs[4]);
 				} catch (CourseException ex) {
 					System.out.println(ex.getCodeDescription());
 				}
-			} else if(inputs[1].contentEquals("-all")&&inputs.length==4) {
+			} else if(inputs.length==4&&inputs[1].contentEquals("-all")) {
 				try {
 					QTest.getQueryHelper().queryForAllCourses(inputs[2], inputs[3]);
 				} catch (CourseException ex) {
 					System.out.println(ex.getCodeDescription());
 				}
+			} else {
+				System.out.println("Input illegal.");
 			}
 		}
 		
 		//错误分支
 		else {
-			System.out.println("Inputs illegal.");
+			System.out.println("Input illegal.");
 		}
 	}
 }
@@ -285,19 +287,19 @@ class StudentLoginState implements State{
 		
 		//gc分支
 		else if(inputs[0].contentEquals("gc")) {
-			if(inputs[1].contentEquals("-id")&&inputs.length==3) {
+			if(inputs.length==3&&inputs[1].contentEquals("-id")) {
 				try {
 					QTest.getQueryHelper().queryForCourseById(inputs[2]);
 				} catch (CourseException ex) {
 					System.out.println(ex.getCodeDescription());
 				}
-			} else if(inputs[1].contentEquals("-key")&&inputs.length==5) {
+			} else if(inputs.length==5&&inputs[1].contentEquals("-key")) {
 				try {
 					QTest.getQueryHelper().queryForCoursesByKey(inputs[2], inputs[3], inputs[4]);
 				} catch (CourseException ex) {
 					System.out.println(ex.getCodeDescription());
 				}
-			} else if(inputs[1].contentEquals("-all")&&inputs.length==4) {
+			} else if(inputs.length==4&&inputs[1].contentEquals("-all")) {
 				try {
 					QTest.getQueryHelper().queryForAllCourses(inputs[2], inputs[3]);
 				} catch (CourseException ex) {
@@ -307,7 +309,6 @@ class StudentLoginState implements State{
 				System.out.println("Input illegal.");
 			}
 		}
-		
 		
 		//getc分支
 		else if(inputs.length==2&&inputs[0].contentEquals("getc")) {
@@ -414,6 +415,10 @@ public class QTest {
 			temp = in.nextLine();
 			temp = temp.replaceAll("\\s+"," ");
 			inputs = temp.split(" ");
+			if(inputs.length==0) {
+				System.out.println("Input illegal");
+				continue;
+			}
 			QTest.handle(inputs);
 		}
 		
