@@ -61,12 +61,10 @@ public class IDNum {
 		if(matcher.find()) {
 			if(!matcher.group(0).contentEquals(id)) {
 				Logger.getGlobal().info("not matching  error");
-//				System.out.println("error1");
 				return false;
 			}
 		}else {
 			Logger.getGlobal().info("not all number error");
-//			System.out.println("error2");
 			return false;
 		}
 		
@@ -79,8 +77,6 @@ public class IDNum {
 			Date date = sdf.parse(bir);
 		}catch(Exception ex) {
 			Logger.getGlobal().info("date error");
-//			System.out.println("error3");
-//			ex.printStackTrace();
 			return false;
 		}
 		
