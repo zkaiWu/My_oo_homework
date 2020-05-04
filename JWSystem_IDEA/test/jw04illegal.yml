@@ -1,0 +1,124 @@
+name: crclz's jw04 input illegal test
+
+# [missing]：少参数。
+# [unexpected]：不缺参数，但是参数是意料之外的。例如当只有'-s', '-t'之类的参数合法时，输入'-o'。
+
+data:
+
+- 
+  - ""
+  - Input illegal.
+
+-
+  - suDo
+  - Input illegal.
+-
+  - aaaaaaa
+  - Input illegal.
+-
+  - bb asdbasdasd asdasdad a a a
+  - Input illegal.
+
+-
+  - login
+  - Input illegal.
+- 
+  - login -s
+  - Input illegal.
+-
+  - login -t
+  - Input illegal.
+-
+  - login -t 5123
+  - Input illegal.
+-
+  - login -s 121132
+  - Input illegal.
+
+-
+  - login -z
+  - Input illegal.
+-
+  - login -z 511111
+  - Input illegal.
+- 
+  - login -z 5125 123131312
+  - Input illegal.
+
+
+
+- 
+  - SUDO
+
+-
+  - ""
+  - Input illegal.
+
+-
+  - qUiT
+  - Input illegal.
+-
+  - exit
+  - Input illegal.
+-
+  - asdsad
+  - Input illegal.
+
+# np [missing]
+-
+  - np
+  - Input illegal.
+-
+  - np -t
+  - Input illegal.
+-
+  - np -t aaa
+  - Input illegal.
+-
+  - np -t aaa 5111111
+  - Input illegal.
+
+# np [unexpected]
+-
+  - np -d
+  - Input illegal.
+-
+  - np -d name 5111111111111 18370000
+  - Input illegal.
+
+- 
+  - back
+
+
+
+# 登陆模式下
+
+# 先添加一个合法用户
+- 
+  - SUDO
+-
+  - np -t lst 53010219200508011x 55864
+  - Add teacher success.
+- 
+  - back
+
+# arg[0] [missing]
+-
+  - ""
+  - Input illegal.
+
+# arg[0] [unexpected]
+-
+  - zzzzz
+  - Input illegal.
+
+# chgpw [missing]
+-
+  - chgpw
+  - Input illegal.
+-
+  - chgpw passwd0
+  - Input illegal.
+
+- 
+  - QUIT

@@ -2,7 +2,6 @@ package coursesystem;
 
 import java.util.*;
 import java.util.logging.Logger;
-import java.math.*;
 
 
 import personsystem.*;
@@ -26,6 +25,34 @@ public class Course implements Comparable<Course>{
 	private PersonList personList = PersonList.getInstance();      //用来将学号转变成名字输出
 	
 	
+	
+	public int getStartWeek() {
+		return startWeek;
+	}
+	public void setStartWeek(int startWeek) {
+		this.startWeek = startWeek;
+	}
+
+	public int getEndWeek() {
+		return endWeek;
+	}
+	public void setEndWeek(int endWeek) {
+		this.endWeek = endWeek;
+	}
+
+	public int getDay() {
+		return day;
+	}
+	public void setDay(int day) {
+		this.day = day;
+	}
+
+	public int getClassNum() {
+		return classNum;
+	}
+	public void setClassNum(int classNum) {
+		this.classNum = classNum;
+	}
 
 	public Course() {
 		this.cid = "";
@@ -56,36 +83,6 @@ public class Course implements Comparable<Course>{
 		return this.maxContent;
 	}
 	
-	public int getStartWeek() {
-		return startWeek;
-	}
-	public void setStartWeek(int startWeek) {
-		this.startWeek = startWeek;
-	}
-
-	public int getEndWeek() {
-		return endWeek;
-	}
-	public void setEndWeek(int endWeek) {
-		this.endWeek = endWeek;
-	}
-
-	public int getDay() {
-		return day;
-	}
-	public void setDay(int day) {
-		this.day = day;
-	}
-
-	public int getClassNum() {
-		return classNum;
-	}
-	public void setClassNum(int classNum) {
-		this.classNum = classNum;
-	}
-	
-	
-	
 	public void setTeachersTid(ArrayList<String> TIDList) {
 		this.teachersTID = TIDList;
 	}
@@ -96,17 +93,6 @@ public class Course implements Comparable<Course>{
 	public boolean isFull() {
 		return this.stuNum>=this.maxContent;
 	}
-	
-	
-	public boolean timeConflictWith(Course courseTemp) {
-		if(courseTemp.getDay()==this.day&&courseTemp.getClassNum()==this.classNum&&
-				!(Math.max(courseTemp.getStartWeek(), this.startWeek)<=Math.min(courseTemp.getEndWeek(), this.endWeek))) {
-			return false;
-		}
-		return true;
-	}
-	
-	
 	
 	/**
 	 * 在学生选课的时候调用，增加课程的选课
@@ -137,7 +123,6 @@ public class Course implements Comparable<Course>{
 		this.stuNum -= flag ? 1 : 0 ;     
 	}
 	
-	
 	/**
 	 * 获得列表类型的students
 	 * @return
@@ -150,6 +135,7 @@ public class Course implements Comparable<Course>{
 		Collections.sort(students);                   //students按照SID的列表排序
 		return students;
 	}
+	
 	
 	
 	

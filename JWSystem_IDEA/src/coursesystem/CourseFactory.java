@@ -5,9 +5,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.regex.*;
-import personsystem.*;
 
-import java.util.*;
+import personsystem.*;
 
 
 
@@ -108,35 +107,6 @@ public class CourseFactory {
 		return true;
 	}
 	
-	
-	/**
-	 * 检查课程字符串是否合法
-	 * @param timeString
-	 * @return
-	 */
-	public static boolean timeStringCheck(String timeString) {
-		String rex = "^\\[[0-9]+\\-[0-9]+\\][0-9]+\\,[0-9]+";
-		if(!timeString.matches(rex)) {
-			return false;
-		}
-		return true;
-	}
-	/**
-	 * 检查课程的各个时间是否合法
-	 * @param startWeek
-	 * @param endWeek
-	 * @param day
-	 * @param classNum
-	 * @return
-	 */
-	public static boolean timeCheck(int startWeek,int endWeek,int day,int classNum) {
-		if(endWeek<startWeek) return false;
-		if(startWeek<1||endWeek>18) return false;
-		if(day<1||day>7) return false;
-		if(classNum<1||classNum>10) return false;
-		return true;
-	}
-	
 	/**
 	 * 设置课程cid的方法
 	 * @param course
@@ -159,7 +129,7 @@ public class CourseFactory {
 	
 	
 	 /**
-	  * 设置课程教师号的方法
+	  * 设置课程号的方法
 	  * @param course
 	  * @param tidsList
 	  * @throws CourseException
@@ -196,13 +166,6 @@ public class CourseFactory {
 		CourseFactory.setTidsForCourse(course,tidsList);
 	}
 	
-	
-	/**
-	 * 设置课程最大用量的方法
-	 * @param course
-	 * @param maxContent
-	 * @throws CourseException
-	 */
 	public static void setMaxContentForCourse(Course course,String maxContent) throws CourseException {
 		int mc = 0;
 		try {
@@ -212,47 +175,6 @@ public class CourseFactory {
 			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
 		}
 		course.setMaxContent(mc);
-	}
-	
-	
-	/**
-	 * 为课程装配时间信息
-	 * @param course
-	 * @param timeString
-	 * @throws CourseException
-	 */
-	public static void setTimeForCourse(Course course,String timeString) throws CourseException {
-		
-		//判断字符串是否合法
-		if(CourseFactory.timeStringCheck(timeString)==false) {
-			throw new CourseException(CourseErrorCode.DATA_ILLEGAL_ERROR);
-		}
-		timeString = timeString.replace("[","");
-		timeString = timeString.replace("]",",");
-		timeString = timeString.replace("-",",");
-		String[] time = timeString.split(",");
-		
-		//解析成数字
-		int startWeek = 0, endWeek = 0, day = 0, classNum = 0;
-		try {
-			startWeek = Integer.parseInt(time[0]);
-			endWeek = Integer.parseInt(time[1]);
-			day = Integer.parseInt(time[2]);
-			classNum = Integer.parseInt(time[3]);
-		} catch (NumberFormatException e) {
-			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
-		}
-		
-		if(CourseFactory.timeCheck(startWeek, endWeek, day, classNum)==false) {
-			throw new CourseException(CourseErrorCode.DATA_ILLEGAL_ERROR);
-		}
-		//装配
-		course.setStartWeek(startWeek);
-		course.setEndWeek(endWeek);
-		course.setDay(day);
-		course.setClassNum(classNum);
-		
-		return;
 	}
 	
 	
@@ -267,7 +189,7 @@ public class CourseFactory {
 	 * @return
 	 * @throws CourseException
 	 */
-	public static Course getNewCourse(String cid,String name,String teachersTid,String maxContent,String timeString) throws CourseException{
+	public static Course getNewCourse(String cid,String name,String teachersTid,String maxContent) throws CourseException{
 		
 		//装配课程实例
 		Course c = new Course();
@@ -276,7 +198,6 @@ public class CourseFactory {
 			CourseFactory.setCIDForCourse(c,cid);
 			CourseFactory.setNameForCourse(c,name);
 			CourseFactory.setTidsForCourse(c, teachersTid);
-			CourseFactory.setTimeForCourse(c, timeString);
 		} catch (CourseException ex) {
 			if(ex.getCode()==CourseErrorCode.INPUT_ILLEGAL_ERROR) {
 				throw ex;
@@ -287,33 +208,5 @@ public class CourseFactory {
 		}
 		return c;
 	}
-	
-	/**
-	 * 单元测试
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		Scanner in = new Scanner(System.in);
-		while(in.hasNext()) {
-			String timeString = in.nextLine();
-			timeString = timeString.replace("[","");
-			timeString = timeString.replace("]",",");
-			timeString = timeString.replace("-",",");
-			String[] time = timeString.split(",");
-			
-			//解析成数字
-			int startWeek = 0, endWeek = 0, day = 0, classNum = 0;
-			try {
-				startWeek = Integer.parseInt(time[0]);
-				endWeek = Integer.parseInt(time[1]);
-				day = Integer.parseInt(time[2]);
-				classNum = Integer.parseInt(time[3]);
-			} catch (NumberFormatException e) {
-				System.out.println(e);
-				continue;
-			}
-			
-			System.out.println(CourseFactory.timeCheck(startWeek, endWeek, day, classNum));
-		}
-	}
+
 }

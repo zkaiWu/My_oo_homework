@@ -105,7 +105,7 @@ public class CourseList {
 	 * @return
 	 * @throws CourseException
 	 */
-	public boolean addCourse(String cid,String name,String teachersTid,String maxContent,String timeString) throws CourseException{
+	public boolean addCourse(String cid,String name,String teachersTid,String maxContent) throws CourseException{
 		
 		
 		if(courseMap.get(cid.toUpperCase())!=null) {
@@ -113,7 +113,8 @@ public class CourseList {
 		}
 		
 		//抛出code为INPUT_ILLEGAL_ERROR的异常
-		Course cor = CourseFactory.getNewCourse(cid, name, teachersTid, maxContent,timeString);
+		Course cor = CourseFactory.getNewCourse(cid, name, teachersTid, maxContent);
+		
 		this.courseMap.put(cid.toUpperCase(),cor);
 		return true;
 		

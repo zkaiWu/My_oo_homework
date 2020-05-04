@@ -26,10 +26,7 @@ public enum CourseErrorCode {
 	RECORD_NOT_EXISTS_ERROR("Record does not exist."),
 	
 	//数据非法
-	DATA_ILLEGAL_ERROR("Data illegal."),
-	
-	//课程时间冲突
-	COURSE_TIME_CONFLICT_ERROR("Course time conflict.");
+	DATA_ILLEGAL_ERROR("Data illegal.");
 	
 	private String description;
 	

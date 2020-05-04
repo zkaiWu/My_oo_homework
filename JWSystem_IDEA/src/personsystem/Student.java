@@ -55,31 +55,15 @@ public class Student extends Person implements Comparable<Student>{
 	 */
 	public void chooseCourse(String cid) throws CourseException {
 		Course course = this.courseList.getCourseById(cid);            //抛出COURSE_NOT_EXISTS_ERROR异常
-		
-		//已经选过
-		if(this.coursesOfStudent.get(cid.toUpperCase())!=null) {         
+		if(this.coursesOfStudent.get(cid.toUpperCase())!=null) {         //已经选过
 			throw new CourseException(CourseErrorCode.COURSE_HAS_BEEN_SELECTED_ERROR);
 		}
-		
-		//时间是否冲突
-		for(String key:this.coursesOfStudent.keySet()) {
-			Course courseTemp = this.coursesOfStudent.get(key);
-			if(courseTemp.timeConflictWith(course)) {
-				throw new CourseException(CourseErrorCode.COURSE_TIME_CONFLICT_ERROR);
-			}
-		}
-		
-		//课程是否满
 		if(course.isFull()==true) {
 			throw new CourseException(CourseErrorCode.COURSE_IS_FULL);
 		}
-		
-		//选课，双向关联
 		course.chosenByStudent(this);                    //课程将当前学生加入
 		this.coursesOfStudent.put(course.getCid().toUpperCase(),course);
 	}
-	
-	
 	
 	/**
 	 * 学生的退课方法，模糊匹配
@@ -91,26 +75,9 @@ public class Student extends Person implements Comparable<Student>{
 		if(this.coursesOfStudent.get(cid.toUpperCase())==null) {         //没有选过
 			throw new CourseException(CourseErrorCode.COURSE_HAS_NOT_BEEN_SELECTED_ERROR);
 		}
-		course.dropedByStudent(this);                    //课程将当前学生删除
+		course.dropedByStudent(this);                    //课程将当前学生加入
 		this.coursesOfStudent.remove(course.getCid().toUpperCase());
 	}
-	
-	
-	/**
-	 * 学生退选所有课，为退学作准备
-	 * @throws CourseException
-	 */
-	public void dropAllCourse() {
-		
-		//循环将所有课程退课
-		for(String kString:this.coursesOfStudent.keySet()) {
-			Course course = this.coursesOfStudent.get(kString);
-			course.dropedByStudent(this);
-		}
-		//删除所有课
-		this.coursesOfStudent.clear();
-	}
-	
 	
 	/**
 	 * 对学生号的检查

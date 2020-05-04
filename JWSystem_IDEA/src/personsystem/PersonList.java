@@ -4,8 +4,6 @@ import java.util.*;
 
 import java.util.logging.Logger;
 
-import coursesystem.CourseException;
-
 
 public class PersonList {
 	
@@ -172,38 +170,6 @@ public class PersonList {
 		pListByID.put(student.getId().toString(),student);     //注意ID的最后一位若为x则是大写。
 		pListBySTID.put(student.getSID(),student);
 		return true;
-	}
-	
-	
-	
-	/**
-	 * 删除一个学生，学生退学hhhhh
-	 * 根据密码确定权限
-	 * @param student
-	 * @param passWord
-	 * @param passWordTemp
-	 * @throws PersonException
-	 */
-	public void deleteStudent(Student student,String passWord,String passWordTemp) throws PersonException{
-		
-		
-		//检查两次方法是否相等
-		if(!passWord.contentEquals(passWordTemp)) {
-			throw new PersonException(PersonErrorCode.PASSWORD_FIRSTPASSWORD_NOT_SAME_WITH_SECONDPASSWORD_ERROR);
-		}
-		
-		
-		//检查密码是否匹配
-		if(!passWord.contentEquals(student.getPassWord())) {
-			throw new PersonException(PersonErrorCode.PASSWORD_NOT_MATCH_ERROR);
-		}
-		
-		//为这个学生退课
-		student.dropAllCourse();
-		
-		//删除这个学生,记住两张表都要删除
-		this.pListByID.remove(student.getId().toString());
-		this.pListBySTID.remove(student.getSID());
 	}
 	
 	

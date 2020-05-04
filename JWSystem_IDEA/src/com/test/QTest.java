@@ -131,9 +131,9 @@ class SudoState implements State {
 		}
 		
 		//nc分支
-		else if(inputs.length==6&&inputs[0].contentEquals("nc")) {
+		else if(inputs.length==5&&inputs[0].contentEquals("nc")) {
 			try {
-				this.cList.addCourse(inputs[1], inputs[2], inputs[3], inputs[4],inputs[5]);
+				this.cList.addCourse(inputs[1], inputs[2], inputs[3], inputs[4]);
 			} catch (CourseException ex) {
 				System.out.println(ex.getCodeDescription());
 			}
@@ -347,17 +347,6 @@ class StudentLoginState implements State{
 			}
 		}
 		
-		
-		
-		//DROPOUT分支
-		else if(inputs.length==3&&inputs[0].contentEquals("DRUPOUT")) {
-			try {
-				pList.deleteStudent((Student)QTest.getUser(),inputs[1],inputs[2]);
-				System.out.println("Congratulations, drop out successfully.");
-			} catch (PersonException e) {
-				System.out.println(e.getCodeDescription());
-			}
-		}
 		
 		
 		//错误分支
