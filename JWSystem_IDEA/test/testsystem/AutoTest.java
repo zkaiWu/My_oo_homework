@@ -29,6 +29,7 @@ import personsystem.*;
 
 
 
+
 public class AutoTest {
  
 	
@@ -48,7 +49,9 @@ public class AutoTest {
 	@Test
 	public void  getDataSource() throws IOException{
 		ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-		DataSource  dataSource = mapper.readValue(DataSource.class.getResourceAsStream("../jw05-arg.yml"),DataSource.class);
+		Logger.getGlobal().info("haha");
+		DataSource  dataSource = mapper.readValue(DataSource.class.getResourceAsStream("../jw04.yml"),DataSource.class);
+		Logger.getGlobal().info("haha");
 		String [][]temp = dataSource.data;
 		Logger.getGlobal().info("temp length"+String.valueOf(temp.length));
 		
