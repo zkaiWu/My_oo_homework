@@ -136,9 +136,6 @@ public class CourseList {
 			}
 			Course c = courseMap.get(cid.toUpperCase());
 			try {
-				if(CourseFactory.courseNameCheck(inputs)) {
-					throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
-				}
 				CourseFactory.setNameForCourse(c,inputs);
 			} catch (CourseException e) {
 				if(e.getCode()==CourseErrorCode.INPUT_ILLEGAL_ERROR) {

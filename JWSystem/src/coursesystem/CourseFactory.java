@@ -77,9 +77,9 @@ public class CourseFactory {
 	 */
 	public static boolean teachersTidCheck(ArrayList<String> tidsList) {
 		
-		//判断教师名合法
+		//判断教师名合法,允许为空
 		for(String tid : tidsList) {
-			if(Teacher.checkTID(tid)==false) {
+			if(Teacher.checkTID(tid)==false&&!tid.contentEquals("")) {
 				return false;
 			}
 		}
