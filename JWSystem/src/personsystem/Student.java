@@ -85,7 +85,7 @@ public class Student extends Person implements Comparable<Student>{
 	 * @return
 	 */
 	public static boolean checkSID(String sid) {
-		return sid.matches("[0-9]{8}");
+		return sid.matches("^[0-9]{8}$");
 	}
 	
 	

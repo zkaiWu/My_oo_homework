@@ -499,7 +499,7 @@ data:
      - SUDO
    - 
      - clist bh00000002 1 1000
-     - |
+     - |-
        Page:1
        1.18370000,studa
        2.18370001,studb

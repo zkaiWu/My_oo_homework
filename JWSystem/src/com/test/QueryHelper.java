@@ -65,7 +65,7 @@ public class QueryHelper {
 				throw new CourseException(CourseErrorCode.RECORD_NOT_EXISTS_ERROR);
 			}
 			//输出页面
-			System.out.println("page:"+page);
+			System.out.println("Page:"+page);
 			for(int i=start; i<end; i++) {
 				System.out.println((i-start+1)+"."+stuList.get(i).getSID()+","+stuList.get(i).getName());
 			}
@@ -129,14 +129,14 @@ public class QueryHelper {
 			//页面为空
 
 			if(start<0) {
-				throw new CourseException(CourseErrorCode.RECORD_NOT_EXISTS_ERROR);
+				throw new CourseException(CourseErrorCode.COURSE_NOT_EXISTS_ERROR);
 			}
 			if(end<=start) {
-				throw new CourseException(CourseErrorCode.RECORD_NOT_EXISTS_ERROR);
+				throw new CourseException(CourseErrorCode.COURSE_NOT_EXISTS_ERROR);
 			}
 			
 			//输出页面
-			System.out.println("page:"+page);
+			System.out.println("Page:"+page);
 			for(int i=start; i<end; i++) {
 				System.out.println((i-start+1)+"."+coursesOfTeacher.get(i));
 			}
@@ -191,14 +191,14 @@ public class QueryHelper {
 			
 			//页面为空
 			if(start<0) {
-				throw new CourseException(CourseErrorCode.RECORD_NOT_EXISTS_ERROR);
+				throw new CourseException(CourseErrorCode.COURSE_NOT_EXISTS_ERROR);
 			}
 			if(start>=end) {
-				throw new CourseException(CourseErrorCode.RECORD_NOT_EXISTS_ERROR);
+				throw new CourseException(CourseErrorCode.COURSE_NOT_EXISTS_ERROR);
 			}
 			
 			//输出页面
-			System.out.println("page:"+page);
+			System.out.println("Page:"+page);
 			for(int i=start; i<end; i++) {
 				System.out.println((i-start+1)+"."+coursesOfStudent.get(i));
 			}
@@ -268,7 +268,7 @@ public class QueryHelper {
 			Logger.getGlobal().info("haha");
 			
 			//输出页面
-			System.out.println("page:"+page);
+			System.out.println("Page:"+page);
 			for(int i=start; i<end; i++) {
 				System.out.println((i-start+1)+"."+courseList.get(i));
 			}

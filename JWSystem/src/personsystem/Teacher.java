@@ -21,7 +21,7 @@ public class Teacher extends Person{
 	
 	
 	public static boolean checkTID(String TID) {
-		return TID.matches("[0-9]{5}");
+		return TID.matches("^[0-9]{5}$");
 	}
 	
 	

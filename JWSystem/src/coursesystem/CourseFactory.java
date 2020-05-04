@@ -76,9 +76,10 @@ public class CourseFactory {
 	 */
 	public static boolean teachersTidCheck(ArrayList<String> tidsList) {
 		
-		//判断教师名合法
+		
+		//判断教师名合法,允许教师名字为空
 		for(String tid : tidsList) {
-			if(Teacher.checkTID(tid)==false) {
+			if(Teacher.checkTID(tid)==false&&!tid.contentEquals("")) {   
 				return false;
 			}
 		}
@@ -135,6 +136,7 @@ public class CourseFactory {
 	  * @throws CourseException
 	  */
 	public static void setTidsForCourse(Course course,ArrayList<String> tidsList) throws CourseException{
+
 		if(CourseFactory.teachersTidCheck(tidsList)==false) {
 			throw new CourseException(CourseErrorCode.DATA_ILLEGAL_ERROR);
 		}
@@ -166,6 +168,13 @@ public class CourseFactory {
 		CourseFactory.setTidsForCourse(course,tidsList);
 	}
 	
+	
+	/**
+	 * 设置最大容量的方法
+	 * @param course
+	 * @param maxContent
+	 * @throws CourseException
+	 */
 	public static void setMaxContentForCourse(Course course,String maxContent) throws CourseException {
 		int mc = 0;
 		try {
