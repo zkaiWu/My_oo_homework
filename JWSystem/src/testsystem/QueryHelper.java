@@ -1,4 +1,4 @@
-package com.test;
+package testsystem;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Scanner;
@@ -43,19 +43,25 @@ public class QueryHelper {
 		
 		//获得参数
 		int len = stuList.size();
-		int page = 0 , pageContext = 0;
+		int page = 0 , pageContent = 0;
 		try {
 			page = Integer.parseInt(pageString);
-			pageContext = Integer.parseInt(pageContentString);
+			pageContent = Integer.parseInt(pageContentString);
 		} catch(NumberFormatException ex) {
 			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);              //	输入错误	
 		}
 		
 		
+		//判断是否非负
+		if(page<0||pageContent<0) {
+			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
+		}
+		
+		
 		//分页输出
 		while(true) {
-			int start = (page-1)*pageContext;
-			int end = Math.min(pageContext*page,len);
+			int start = (page-1)*pageContent;
+			int end = Math.min(pageContent*page,len);
 			
 			//页面为空
 			if(start<0) {
@@ -113,18 +119,23 @@ public class QueryHelper {
 		
 		//获得参数
 		int len = coursesOfTeacher.size();
-		int page = 0 , pageContext = 0;
+		int page = 0 , pageContent = 0;
 		try {
 			page = Integer.parseInt(pageString);
-			pageContext = Integer.parseInt(pageContentString);
+			pageContent = Integer.parseInt(pageContentString);
 		} catch(NumberFormatException ex) {
 			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);              //	输入错误	
 		}
 		
 		
+		//判断是否非负
+		if(page<0||pageContent<0) {
+			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
+		}
+		
 		while(true) {
-			int start = (page-1)*pageContext;
-			int end = Math.min(pageContext*page,len);
+			int start = (page-1)*pageContent;
+			int end = Math.min(pageContent*page,len);
 			
 			//页面为空
 
@@ -185,6 +196,11 @@ public class QueryHelper {
 		}
 		
 		
+		//判断是否非负
+		if(page<0||pageContent<0) {
+			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
+		}
+		
 		while(true) {
 			int start = (page-1)*pageContent;
 			int end = Math.min(pageContent*page,len);
@@ -244,12 +260,19 @@ public class QueryHelper {
 		ArrayList<Course> courseList = cList.getCoursesByKeyword(key);
 		Scanner in = new Scanner(System.in);
 		
+		
+		//获取页面信息
 		int len = courseList.size();
 		int page = 0, pageContent = 0;
 		try {
 			page = Integer.parseInt(pageString);
 			pageContent = Integer.parseInt(pageContentString);
 		} catch (NumberFormatException e) {
+			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
+		}
+		
+		//判断是否非负
+		if(page<0||pageContent<0) {
 			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
 		}
 		
@@ -302,6 +325,11 @@ public class QueryHelper {
 			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
 		}
 		
+		//判断是否非负
+		if(page<0||pageContent<0) {
+			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
+		}
+		
 		while(true) {
 			int start = (page-1)*pageContent;
 			int end = Math.min(pageContent*page,len);
@@ -312,6 +340,11 @@ public class QueryHelper {
 			}
 			if(end<=start) {
 				throw new CourseException(CourseErrorCode.COURSE_NOT_EXISTS_ERROR);
+			}
+			
+			//判断是否非负
+			if(page<0||pageContent<0) {
+				throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
 			}
 			
 			//输出页面

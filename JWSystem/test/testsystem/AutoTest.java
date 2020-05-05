@@ -55,7 +55,7 @@ public class AutoTest {
 		for(int i=0;i<temp.length;i++) {
 			
 			String inputs[] = temp[i][0].split(" ");
-			com.test.QTest.handle(inputs);
+			testsystem.Test.handle(inputs);
 			if(temp[i].length==1) {
 				Logger.getGlobal().info(temp[i][0]);
 				Logger.getGlobal().info(this.byteArrayOutputStream.toString());

@@ -180,7 +180,7 @@ public class CourseFactory {
 			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);             //若不已[开头]结尾，则不对
 		}
 		if(!CourseFactory.teachersTidStringCheck(teachersTid)){
-			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR); 
+			throw new CourseException(CourseErrorCode.COURSE_UPDATE_ERROR); 
 		}
 		teachersTid = teachersTid.substring(1,len);
 		len = teachersTid.length();

@@ -93,7 +93,7 @@ public class Person {
 		}
 		for(int i=0;i<pwd.length();i++) {
 			char c = pwd.charAt(i);
-			if(c<=33||c>=126) {
+			if(c<33||c>126) {
 				return false;
 			} else if(c>='A'&&c<='Z') {
 				hasUpper = 1;
