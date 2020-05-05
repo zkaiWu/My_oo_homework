@@ -351,8 +351,6 @@ class StudentLoginState implements State{
 			}
 		}
 		
-		
-		
 		//错误分支
 		else {
 			System.out.println("Input illegal.");

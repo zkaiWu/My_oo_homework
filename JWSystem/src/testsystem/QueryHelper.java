@@ -51,6 +51,11 @@ public class QueryHelper {
 			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);              //	输入错误	
 		}
 		
+		//判断n，m是否非负
+		if(page<0||pageContext<0) {
+			throw new CourseException(CourseErrorCode.INPUT_ILLEGAL_ERROR);
+		}
+		
 		
 		//分页输出
 		while(true) {

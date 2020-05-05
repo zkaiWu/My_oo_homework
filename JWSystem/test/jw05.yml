@@ -219,7 +219,7 @@ data:
      - Course does not exist.
    -
      - udc bh00000000 -t [,10001] # TODO 列表解析错误应该输出什么？input-illegal or update-fail
-     - Input illegal.
+     - Update fail.
    -
      - udc bh00000000 -t [10001,1000] # 教师号非法
      - Update fail.
