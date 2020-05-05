@@ -27,12 +27,14 @@ public class Student extends Person implements Comparable<Student>{
 		this.coursesOfStudent = new HashMap<String, Course>();
 	}
 	
+	
 	public void setSID(String sid) {
 		this.SID = sid;
 	}
 	public String getSID() {
 		return this.SID;
 	}
+	
 	
 	public ArrayList<Course> getCourses(){
 		ArrayList<Course> cList = new ArrayList<Course>();
@@ -65,6 +67,7 @@ public class Student extends Person implements Comparable<Student>{
 		this.coursesOfStudent.put(course.getCid().toUpperCase(),course);
 	}
 	
+	
 	/**
 	 * 学生的退课方法，模糊匹配
 	 * @param cid
@@ -78,6 +81,7 @@ public class Student extends Person implements Comparable<Student>{
 		course.dropedByStudent(this);                    //课程将当前学生加入
 		this.coursesOfStudent.remove(course.getCid().toUpperCase());
 	}
+	
 	
 	/**
 	 * 对学生号的检查

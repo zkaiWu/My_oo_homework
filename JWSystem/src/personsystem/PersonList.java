@@ -24,7 +24,8 @@ public class PersonList {
 	}
 	
 	
-	/* 学生登录，如果登录成功则返回一个用户。
+	/** 
+	 * 学生登录，如果登录成功则返回一个用户。
 	 * 教师登录
 	 * @param id 身份证号
 	 * @param pwd 密码
@@ -50,7 +51,7 @@ public class PersonList {
 		return person;
 	}
 	
-	/*
+	/**
 	 * 学生登录,如果登录成功则返回一个用户
 	 * @param id 身份证号
 	 * @param pwd 密码
@@ -123,7 +124,7 @@ public class PersonList {
 	}
 	
 	
-	/*
+	/**
 	 * 添加老师
 	 * @param name 老师名
 	 * @param id 身份证
@@ -149,11 +150,13 @@ public class PersonList {
 	}
 	
 	
-	/*
+	/**
 	 * 添加学生
-	 * @param name 学生名
-	 * @param id 身份证
-	 * @oaram Tid 老师号
+	 * @param name
+	 * @param id
+	 * @param SID
+	 * @return
+	 * @throws PersonException
 	 */
 	public boolean addStudent(String name,String id,String SID) throws PersonException {
 		
@@ -177,7 +180,7 @@ public class PersonList {
 	
 	
 	
-	/*
+	/**
 	 * 单元测试
 	 */
 	public static void main(String[] args) {

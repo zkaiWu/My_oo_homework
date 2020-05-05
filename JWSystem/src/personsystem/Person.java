@@ -79,10 +79,20 @@ public class Person {
 	
 	
 	
-	//检查Person中的各种ID是否合法
+	/**
+	 * 检查姓名是否合法
+	 * @param name
+	 * @return
+	 */
 	public static boolean checkName(String name) {
-		return name.matches("[a-zA-Z]+");
+		return name.matches("^[a-zA-Z]+$");
 	}
+	
+	/**
+	 * 检查密码是否合法
+	 * @param pwd
+	 * @return
+	 */
 	public static boolean checkPwd(String pwd) {
 		int hasNum = 0 ;
 		int hasLower = 0;
@@ -150,7 +160,6 @@ public class Person {
 			person.setBirthday(dir);
 		}catch(Exception ex) {
 			Logger.getGlobal().info("get data false");
-//			System.out.println("false");
 			throw new PersonException(PersonErrorCode.ID_ILLEGAL_ERROR);
 		}
 		

@@ -16,8 +16,10 @@ interface State{
 }
 
 
-/*
- * 初始状态
+/**
+ * 进入系统初始状态
+ * @author wzk1998
+ *
  */
 class LevelOneState implements State {
 	private PersonList pList;
@@ -72,8 +74,10 @@ class LevelOneState implements State {
 }
 
 
-/*
+/**
  * sudo登录状态
+ * @author wzk1998
+ *
  */
 class SudoState implements State {
 	private PersonList pList;

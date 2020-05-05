@@ -94,6 +94,8 @@ public class CourseFactory {
 		}
 		return true;
 	}
+	
+	
 	/**
 	 * 
 	 * 检查Tid的字符串是否合法
