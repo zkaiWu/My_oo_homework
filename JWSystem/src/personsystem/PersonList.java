@@ -38,13 +38,13 @@ public class PersonList {
 		}
 		
 		//判断课程是否存在
-		if(pListByID.get(id)==null) {
+		if(pListByID.get(id.toUpperCase())==null) {
 			throw new PersonException(PersonErrorCode.LOGIN_ERROR);
 		}
 		
 		//判断密码以及Person具体类型
-		Person person = pListByID.get(id);
-		if(!person.getPassWord().contentEquals(pwd)||!(person instanceof Teacher)) {
+		Person person = pListByID.get(id.toUpperCase());
+		if((!person.getPassWord().contentEquals(pwd))||!(person instanceof Teacher)) {
 			throw new PersonException(PersonErrorCode.LOGIN_ERROR);
 		}
 		return person;
@@ -62,14 +62,14 @@ public class PersonList {
 			throw new PersonException(PersonErrorCode.LOGIN_ERROR);
 		}
 				
-		//判断课程是否存在
-		if(pListByID.get(id)==null) {
+		//判断人是否存在
+		if(pListByID.get(id.toUpperCase())==null) {
 			throw new PersonException(PersonErrorCode.LOGIN_ERROR);
 		}
 				
 		//判断密码以及Person具体类型
-		Person person = pListByID.get(id);
-		if(!person.getPassWord().contentEquals(pwd)||!(person instanceof Student)) {
+		Person person = pListByID.get(id.toUpperCase());
+		if((!person.getPassWord().contentEquals(pwd))||!(person instanceof Student)) {
 			throw new PersonException(PersonErrorCode.LOGIN_ERROR);
 		}
 		return person;
@@ -82,7 +82,7 @@ public class PersonList {
 	 * @throws PersonException
 	 */
 	public Person getPersonByID(String id) throws PersonException{
-		if(pListByID.get(id)==null) {
+		if(pListByID.get(id.toUpperCase())==null) {
 			throw new PersonException(PersonErrorCode.ID_NOT_EXIST_ERROR);
 		}
 		Person person = pListByID.get(id.toUpperCase());
@@ -112,6 +112,9 @@ public class PersonList {
 	 * @throws PersonException
 	 */
 	public void chgPersonPwd(String firstPwd,String secondPwd,Person teacher) throws PersonException{
+		if(Person.checkPwd(firstPwd)==false) {
+			throw new PersonException(PersonErrorCode.PASSWORD_ILLEGAL_ERROR);
+		}
 		if(!firstPwd.contentEquals(secondPwd)) {
 			throw new PersonException(PersonErrorCode.PASSWORD_FIRSTPASSWORD_NOT_SAME_WITH_SECONDPASSWORD_ERROR);
 		}
@@ -140,7 +143,7 @@ public class PersonList {
 		if(this.pListBySTID.get(TID)!=null) {
 			throw new PersonException(PersonErrorCode.TID_EXIST_ERROR);
 		}
-		pListByID.put(teacher.getId().toString(),teacher);
+		pListByID.put(teacher.getId().toString().toUpperCase(),teacher);
 		pListBySTID.put(teacher.getTID(),teacher);
 		return true;
 	}
@@ -167,7 +170,7 @@ public class PersonList {
 		if(this.pListBySTID.get(SID)!=null) {
 			throw new PersonException(PersonErrorCode.SID_EXIST_ERROR);
 		}
-		pListByID.put(student.getId().toString(),student);     //注意ID的最后一位若为x则是大写。
+		pListByID.put(student.getId().toString().toUpperCase(),student);     //注意ID的最后一位若为x则是大写。
 		pListBySTID.put(student.getSID(),student);
 		return true;
 	}

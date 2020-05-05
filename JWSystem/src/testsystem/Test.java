@@ -1,5 +1,5 @@
 
-package com.test;
+package testsystem;
 
 
 import java.util.*;
@@ -30,7 +30,7 @@ class LevelOneState implements State {
 		
 		//sudo分支
 		if(inputs.length==1&&inputs[0].contentEquals("SUDO")) {
-			QTest.setNowState(QTest.sudoState);
+			Test.setNowState(Test.sudoState);
 		} 
 		
 		//QUIT分支
@@ -44,8 +44,8 @@ class LevelOneState implements State {
 				try {
 					Person user = pList.teaLoginCheck(inputs[2], inputs[3]);     //如果登录成功则返回一个用户
 					System.out.println("Login success.");
-					QTest.setUser(user);                           //设置用户
-					QTest.setNowState(QTest.TeacherLoginState);              //转换状态
+					Test.setUser(user);                           //设置用户
+					Test.setNowState(Test.TeacherLoginState);              //转换状态
 				} catch(PersonException ex) {
 					System.out.println(ex.getCodeDescription());
 				}
@@ -54,8 +54,8 @@ class LevelOneState implements State {
 				try {
 					Person user = pList.stuLoginCheck(inputs[2], inputs[3]);     //如果登录成功则返回一个用户
 					System.out.println("Login success.");
-					QTest.setUser(user);                           //设置用户
-					QTest.setNowState(QTest.StudentLoginState);              //转换状态
+					Test.setUser(user);                           //设置用户
+					Test.setNowState(Test.StudentLoginState);              //转换状态
 				} catch(PersonException ex) {
 					System.out.println(ex.getCodeDescription());
 				}
@@ -92,7 +92,7 @@ class SudoState implements State {
 		
 		//back分支
 		else if(inputs.length==1&&inputs[0].contentEquals("back")) {
-			QTest.setNowState(QTest.levelOneState);
+			Test.setNowState(Test.levelOneState);
 		}
 		
 		
@@ -142,7 +142,7 @@ class SudoState implements State {
 		//clist分支
 		else if(inputs.length==4&&inputs[0].contentEquals("clist")) {
 			try {
-				QTest.getQueryHelper().queryForClist(inputs[1], inputs[2], inputs[3]);
+				Test.getQueryHelper().queryForClist(inputs[1], inputs[2], inputs[3]);
 			} catch(CourseException ex) {
 				System.out.println(ex.getCodeDescription());
 			}
@@ -177,18 +177,18 @@ class TeacherLoginState implements State {
 		
 		//back分支
 		else if(inputs.length==1&&inputs[0].contentEquals("back")) {
-			QTest.setNowState(QTest.levelOneState);
+			Test.setNowState(Test.levelOneState);
 		}
 		
 		//myinfo分支
 		else if(inputs.length==1&&inputs[0].contentEquals("myinfo")) {
-			System.out.println(QTest.getUser());
+			System.out.println(Test.getUser());
 		}
 		
 		//chgpw分支
 		else if(inputs.length==3&&inputs[0].contentEquals("chgpw")) {
 			try {
-				pList.chgPersonPwd(inputs[1], inputs[2], QTest.getUser());
+				pList.chgPersonPwd(inputs[1], inputs[2], Test.getUser());
 				System.out.println("Password changed successfully.");
 			} catch (PersonException e) {
 				System.out.println(e.getCodeDescription());
@@ -198,7 +198,7 @@ class TeacherLoginState implements State {
 		//clist分支
 		else if(inputs.length==4&&inputs[0].contentEquals("clist")) {
 			try {
-				QTest.getQueryHelper().queryForClist(inputs[1], inputs[2], inputs[3]);
+				Test.getQueryHelper().queryForClist(inputs[1], inputs[2], inputs[3]);
 			} catch (CourseException ex) {
 				System.out.println(ex.getCodeDescription());
 			}
@@ -208,8 +208,8 @@ class TeacherLoginState implements State {
 		//myc分支
 		else if(inputs.length==3&&inputs[0].contentEquals("myc")) {
 			try {
-				Teacher teacher = (Teacher)QTest.getUser();
-				QTest.getQueryHelper().queryForCoursesOfTeacher(teacher.getTID(),inputs[1], inputs[2]);
+				Teacher teacher = (Teacher)Test.getUser();
+				Test.getQueryHelper().queryForCoursesOfTeacher(teacher.getTID(),inputs[1], inputs[2]);
 			} catch (CourseException e) {
 				System.out.println(e.getCodeDescription());
 			}
@@ -220,19 +220,19 @@ class TeacherLoginState implements State {
 		else if(inputs[0].contentEquals("gc")) {
 			if(inputs.length==3&&inputs[1].contentEquals("-id")) {
 				try {
-					QTest.getQueryHelper().queryForCourseById(inputs[2]);
+					Test.getQueryHelper().queryForCourseById(inputs[2]);
 				} catch (CourseException ex) {
 					System.out.println(ex.getCodeDescription());
 				}
 			} else if(inputs.length==5&&inputs[1].contentEquals("-key")) {
 				try {
-					QTest.getQueryHelper().queryForCoursesByKey(inputs[2], inputs[3], inputs[4]);
+					Test.getQueryHelper().queryForCoursesByKey(inputs[2], inputs[3], inputs[4]);
 				} catch (CourseException ex) {
 					System.out.println(ex.getCodeDescription());
 				}
 			} else if(inputs.length==4&&inputs[1].contentEquals("-all")) {
 				try {
-					QTest.getQueryHelper().queryForAllCourses(inputs[2], inputs[3]);
+					Test.getQueryHelper().queryForAllCourses(inputs[2], inputs[3]);
 				} catch (CourseException ex) {
 					System.out.println(ex.getCodeDescription());
 				}
@@ -267,18 +267,18 @@ class StudentLoginState implements State{
 		
 		//back分支
 		else if(inputs.length==1&&inputs[0].contentEquals("back")) {
-			QTest.setNowState(QTest.levelOneState);
+			Test.setNowState(Test.levelOneState);
 		}
 		
 		//myinfo分支
 		else if(inputs.length==1&&inputs[0].contentEquals("myinfo")) {
-			System.out.println(QTest.getUser());
+			System.out.println(Test.getUser());
 		}
 		
 		//chgpw分支
 		else if(inputs.length==3&&inputs[0].contentEquals("chgpw")) {
 			try {
-				pList.chgPersonPwd(inputs[1], inputs[2], QTest.getUser());
+				pList.chgPersonPwd(inputs[1], inputs[2], Test.getUser());
 				System.out.println("Password changed successfully.");
 			} catch (PersonException e) {
 				System.out.println(e.getCodeDescription());
@@ -289,19 +289,19 @@ class StudentLoginState implements State{
 		else if(inputs[0].contentEquals("gc")) {
 			if(inputs.length==3&&inputs[1].contentEquals("-id")) {
 				try {
-					QTest.getQueryHelper().queryForCourseById(inputs[2]);
+					Test.getQueryHelper().queryForCourseById(inputs[2]);
 				} catch (CourseException ex) {
 					System.out.println(ex.getCodeDescription());
 				}
 			} else if(inputs.length==5&&inputs[1].contentEquals("-key")) {
 				try {
-					QTest.getQueryHelper().queryForCoursesByKey(inputs[2], inputs[3], inputs[4]);
+					Test.getQueryHelper().queryForCoursesByKey(inputs[2], inputs[3], inputs[4]);
 				} catch (CourseException ex) {
 					System.out.println(ex.getCodeDescription());
 				}
 			} else if(inputs.length==4&&inputs[1].contentEquals("-all")) {
 				try {
-					QTest.getQueryHelper().queryForAllCourses(inputs[2], inputs[3]);
+					Test.getQueryHelper().queryForAllCourses(inputs[2], inputs[3]);
 				} catch (CourseException ex) {
 					System.out.println(ex.getCodeDescription());
 				}
@@ -313,7 +313,7 @@ class StudentLoginState implements State{
 		//getc分支
 		else if(inputs.length==2&&inputs[0].contentEquals("getc")) {
 			
-			Student student = (Student) QTest.getUser();
+			Student student = (Student) Test.getUser();
 			try {
 				student.chooseCourse(inputs[1]);
 				System.out.println("Course chosen success.");
@@ -325,7 +325,7 @@ class StudentLoginState implements State{
 		//dropc分支
 		else if(inputs.length==2&&inputs[0].contentEquals("dropc")) {
 			
-			Student student = (Student) QTest.getUser();
+			Student student = (Student) Test.getUser();
 			try {
 				student.dropCourse(inputs[1]);
 				System.out.println("Drop out successful.");
@@ -338,8 +338,8 @@ class StudentLoginState implements State{
 		//myc分支
 		else if(inputs.length==3&&inputs[0].contentEquals("myc")) {
 			try {
-				Student student = (Student) QTest.getUser();
-				QTest.getQueryHelper().queryForCourseOfStudent(student.getSID(),inputs[1], inputs[2]);
+				Student student = (Student) Test.getUser();
+				Test.getQueryHelper().queryForCourseOfStudent(student.getSID(),inputs[1], inputs[2]);
 			} catch (CourseException e) {
 				System.out.println(e.getCodeDescription());
 			} catch (PersonException ex) {
@@ -360,7 +360,7 @@ class StudentLoginState implements State{
 /*
  * 主要测试类
  */
-public class QTest {
+public class Test {
 	
 	
 	public static PersonList pList = PersonList.getInstance();
@@ -380,14 +380,14 @@ public class QTest {
 		return nowState;
 	}
 	public static void setNowState(State nowState) {
-		QTest.nowState = nowState;
+		Test.nowState = nowState;
 	}
 	
 	public static void setUser(Person user) {
-		QTest.user =  user;
+		Test.user =  user;
 	}
 	public static Person getUser() {
-		return QTest.user;
+		return Test.user;
 	}
 
 	
@@ -395,12 +395,12 @@ public class QTest {
 		return queryHelper;
 	}
 	public static void setQueryHelper(QueryHelper queryHelper) {
-		QTest.queryHelper = queryHelper;
+		Test.queryHelper = queryHelper;
 	}
 	
 	
 	public static void handle(String[] inputs) {
-		QTest.nowState.handle(inputs);
+		Test.nowState.handle(inputs);
 	}
 	
 	public static void main(String[] args) {
@@ -419,7 +419,7 @@ public class QTest {
 				System.out.println("Input illegal");
 				continue;
 			}
-			QTest.handle(inputs);
+			Test.handle(inputs);
 		}
 		
 	}

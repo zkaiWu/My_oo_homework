@@ -49,14 +49,14 @@ public class AutoTest {
 	@Test
 	public void  getDataSource() throws IOException{
 		ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-		DataSource  dataSource = mapper.readValue(DataSource.class.getResourceAsStream("../jw04illegal.yml"),DataSource.class);
+		DataSource  dataSource = mapper.readValue(DataSource.class.getResourceAsStream("../jw04.yml"),DataSource.class);
 		String [][]temp = dataSource.data;
 		Logger.getGlobal().info("temp length"+String.valueOf(temp.length));
 		
 		for(int i=0;i<temp.length;i++) {
 			
 			String inputs[] = temp[i][0].split(" ");
-			com.test.QTest.handle(inputs);
+			testsystem.Test.handle(inputs);
 			if(temp[i].length==1) {
 				Logger.getGlobal().info(temp[i][0]);
 				Logger.getGlobal().info(this.byteArrayOutputStream.toString());
