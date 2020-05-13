@@ -33,12 +33,11 @@ public class QueryHelper {
 	 * @param pageString	字符串形式的page页码
 	 * @param pageContentString 字符串形式的每页最大容量
 	 */
-	public void queryForClist(String cid,String pageString,String pageContentString) throws CourseException{
+	public void queryForClist(String cid,String pageString,String pageContentString,Scanner in) throws CourseException{
 		
 		//获取选课列表
 		Course course = cList.getCourseById(cid);                 //模糊匹配,抛出异常
 		ArrayList<Student> stuList= course.getStudentsOfCourse();
-		Scanner in = new Scanner(System.in);
 		
 		
 		//获得参数
@@ -97,10 +96,9 @@ public class QueryHelper {
 	 * @param pageString
 	 * @param pageContentString
 	 */
-	public void queryForCoursesOfTeacher(String tid,String pageString,String pageContentString) throws CourseException {
+	public void queryForCoursesOfTeacher(String tid,String pageString,String pageContentString,Scanner in) throws CourseException {
 		ArrayList<Course> allCourse = cList.getAllCourses();
 		ArrayList<Course> coursesOfTeacher = new ArrayList<Course>();
-		Scanner in = new Scanner(System.in);
 		
 		//动态查找并添加课程，获取课表
 		for(int i=0;i<allCourse.size();i++) {
@@ -177,13 +175,12 @@ public class QueryHelper {
 	 * @param pageString
 	 * @param pageContentString
 	 */
-	public void queryForCourseOfStudent(String sid,String pageString,String pageContentString) throws CourseException,PersonException{
+	public void queryForCourseOfStudent(String sid,String pageString,String pageContentString,Scanner in) throws CourseException,PersonException{
 		
 		//获取学生选课列表
 		Student student = (Student) pList.getPersonBySTID(sid);                    //抛出PersonException
 		ArrayList<Course> coursesOfStudent = student.getCourses();
 		Collections.sort(coursesOfStudent);
-		Scanner in = new Scanner(System.in);
 		
 		int len = coursesOfStudent.size();
 		int page = 0 , pageContent = 0;
@@ -255,10 +252,9 @@ public class QueryHelper {
 	 * @param pageContentString
 	 * @throws CourseException
 	 */
-	public void queryForCoursesByKey(String key,String pageString,String pageContentString) throws CourseException{
+	public void queryForCoursesByKey(String key,String pageString,String pageContentString,Scanner in) throws CourseException{
 		
 		ArrayList<Course> courseList = cList.getCoursesByKeyword(key);
-		Scanner in = new Scanner(System.in);
 		
 		int len = courseList.size();
 		int page = 0, pageContent = 0;
@@ -309,10 +305,9 @@ public class QueryHelper {
 		}
 	}
 	
-	public void queryForAllCourses(String pageString,String pageContentString) throws CourseException{
+	public void queryForAllCourses(String pageString,String pageContentString,Scanner in) throws CourseException{
 		
 		ArrayList<Course> courseList = cList.getAllCourses();
-		Scanner in = new Scanner(System.in);
 		
 		int len = courseList.size();
 		int page = 0, pageContent = 0;
@@ -341,7 +336,7 @@ public class QueryHelper {
 			}
 			
 			//输出页面
-			System.out.println("page:"+page);
+			System.out.println("Page:"+page);
 			for(int i=start; i<end; i++) {
 				System.out.println((i-start+1)+"."+courseList.get(i));
 			}

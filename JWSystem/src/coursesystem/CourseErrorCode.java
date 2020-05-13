@@ -11,7 +11,7 @@ public enum CourseErrorCode {
 	INPUT_ILLEGAL_ERROR("Input illegal."),
 	
 	//课程选择时错误
-	COURSE_HAS_BEEN_SELECTED_ERROR("The course has been selected"),
+	COURSE_HAS_BEEN_SELECTED_ERROR("The course has been selected."),
 	COURSE_HAS_NOT_BEEN_SELECTED_ERROR("The course has not been selected."),
 	COURSE_IS_FULL("The course is full."),
 	

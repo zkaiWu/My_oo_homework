@@ -146,7 +146,7 @@ class SudoState implements State {
 		//clist分支
 		else if(inputs.length==4&&inputs[0].contentEquals("clist")) {
 			try {
-				Test.getQueryHelper().queryForClist(inputs[1], inputs[2], inputs[3]);
+				Test.getQueryHelper().queryForClist(inputs[1], inputs[2], inputs[3],Test.getIn());
 			} catch(CourseException ex) {
 				System.out.println(ex.getCodeDescription());
 			}
@@ -202,7 +202,7 @@ class TeacherLoginState implements State {
 		//clist分支
 		else if(inputs.length==4&&inputs[0].contentEquals("clist")) {
 			try {
-				Test.getQueryHelper().queryForClist(inputs[1], inputs[2], inputs[3]);
+				Test.getQueryHelper().queryForClist(inputs[1], inputs[2], inputs[3],Test.getIn());
 			} catch (CourseException ex) {
 				System.out.println(ex.getCodeDescription());
 			}
@@ -213,7 +213,7 @@ class TeacherLoginState implements State {
 		else if(inputs.length==3&&inputs[0].contentEquals("myc")) {
 			try {
 				Teacher teacher = (Teacher)Test.getUser();
-				Test.getQueryHelper().queryForCoursesOfTeacher(teacher.getTID(),inputs[1], inputs[2]);
+				Test.getQueryHelper().queryForCoursesOfTeacher(teacher.getTID(),inputs[1], inputs[2],Test.getIn());
 			} catch (CourseException e) {
 				System.out.println(e.getCodeDescription());
 			}
@@ -230,13 +230,13 @@ class TeacherLoginState implements State {
 				}
 			} else if(inputs.length==5&&inputs[1].contentEquals("-key")) {
 				try {
-					Test.getQueryHelper().queryForCoursesByKey(inputs[2], inputs[3], inputs[4]);
+					Test.getQueryHelper().queryForCoursesByKey(inputs[2], inputs[3], inputs[4],Test.getIn());
 				} catch (CourseException ex) {
 					System.out.println(ex.getCodeDescription());
 				}
 			} else if(inputs.length==4&&inputs[1].contentEquals("-all")) {
 				try {
-					Test.getQueryHelper().queryForAllCourses(inputs[2], inputs[3]);
+					Test.getQueryHelper().queryForAllCourses(inputs[2], inputs[3],Test.getIn());
 				} catch (CourseException ex) {
 					System.out.println(ex.getCodeDescription());
 				}
@@ -299,13 +299,13 @@ class StudentLoginState implements State{
 				}
 			} else if(inputs.length==5&&inputs[1].contentEquals("-key")) {
 				try {
-					Test.getQueryHelper().queryForCoursesByKey(inputs[2], inputs[3], inputs[4]);
+					Test.getQueryHelper().queryForCoursesByKey(inputs[2], inputs[3], inputs[4],Test.getIn());
 				} catch (CourseException ex) {
 					System.out.println(ex.getCodeDescription());
 				}
 			} else if(inputs.length==4&&inputs[1].contentEquals("-all")) {
 				try {
-					Test.getQueryHelper().queryForAllCourses(inputs[2], inputs[3]);
+					Test.getQueryHelper().queryForAllCourses(inputs[2], inputs[3],Test.getIn());
 				} catch (CourseException ex) {
 					System.out.println(ex.getCodeDescription());
 				}
@@ -343,7 +343,7 @@ class StudentLoginState implements State{
 		else if(inputs.length==3&&inputs[0].contentEquals("myc")) {
 			try {
 				Student student = (Student) Test.getUser();
-				Test.getQueryHelper().queryForCourseOfStudent(student.getSID(),inputs[1], inputs[2]);
+				Test.getQueryHelper().queryForCourseOfStudent(student.getSID(),inputs[1], inputs[2],Test.getIn());
 			} catch (CourseException e) {
 				System.out.println(e.getCodeDescription());
 			} catch (PersonException ex) {
@@ -375,6 +375,7 @@ public class Test {
 	private static State nowState = levelOneState;
 	private static QueryHelper queryHelper = new QueryHelper(pList, cList);
 	private static Person user;
+	private static Scanner in = new Scanner(System.in);
 	
 	
 	
@@ -401,13 +402,17 @@ public class Test {
 	}
 	
 	
+	public static Scanner getIn() {
+		return Test.in;
+	}
+	
+	
 	public static void handle(String[] inputs) {
 		Test.nowState.handle(inputs);
 	}
 	
 	public static void main(String[] args) {
 		
-		Scanner in = new Scanner(System.in);
 		String temp = "";
 		String[] inputs;
 		Logger.getGlobal().setLevel(Level.OFF);

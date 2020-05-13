@@ -49,7 +49,7 @@ public class AutoTest {
 	@Test
 	public void  getDataSource() throws IOException{
 		ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-		DataSource  dataSource = mapper.readValue(DataSource.class.getResourceAsStream("../jw05-arg.yml"),DataSource.class);
+		DataSource  dataSource = mapper.readValue(DataSource.class.getResourceAsStream("../jw04-samshui.yml"),DataSource.class);
 		String [][]temp = dataSource.data;
 		Logger.getGlobal().info("temp length"+String.valueOf(temp.length));
 		
